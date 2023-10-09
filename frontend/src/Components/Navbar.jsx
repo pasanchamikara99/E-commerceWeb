@@ -8,7 +8,7 @@ import { Login } from "./Modal/Login";
 import { Home } from "../Pages/Home";
 
 const Navbar = (props) => {
-  const user = "";
+  const user = "user";
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -83,11 +83,12 @@ const Navbar = (props) => {
               <PersonSharpIcon
                 style={{ fontSize: "30px", cursor: "pointer" }}
               />
-              <b>Hello, Rajapaksha</b>
+
+              <b>Pasan</b>
             </div>
 
             <div className="cart">
-              <Badge badgeContent={props.number} color="primary">
+              <Badge badgeContent={4} color="primary">
                 <ShoppingCartIcon
                   style={{
                     fontSize: "30px",
@@ -96,7 +97,7 @@ const Navbar = (props) => {
                   }}
                 />
               </Badge>
-              <b>Rs.{props.number * 1000}.00</b>
+              <br />
             </div>
           </div>
         ) : user === "admin" ? (
