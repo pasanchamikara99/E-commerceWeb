@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Badge } from "@mui/material";
+import { LoginModal } from "../Context/LoginModal";
 import "../index.css";
-import { Login } from "./Modal/Login";
-import { Home } from "../Pages/Home";
 
 const Navbar = (props) => {
-  const user = "";
+  const user = "user";
 
-  const [openModal, setOpenModal] = useState(false);
+  const { clickLogin, setClickLogin } = useContext(LoginModal);
+
+  console.log("navbar ", clickLogin);
 
   const buttonStyle = {
     padding: "10px",
@@ -18,10 +19,6 @@ const Navbar = (props) => {
     color: "white",
     marginLeft: "10px",
     borderRadius: "5px",
-  };
-
-  const clickLogin = () => {
-    setOpenModal(true);
   };
 
   return (
@@ -83,7 +80,9 @@ const Navbar = (props) => {
               <PersonSharpIcon
                 style={{ fontSize: "30px", cursor: "pointer" }}
               />
-              <b>Hello, Rajapaksha</b>
+              <label htmlFor="" style={{ fontSize: "13px" }}>
+                <b>Hello, Rajapaksha</b>
+              </label>
             </div>
 
             <div className="cart">
@@ -96,7 +95,9 @@ const Navbar = (props) => {
                   }}
                 />
               </Badge>
-              <b>Rs.{props.number * 1000}.00</b>
+              <label htmlFor="" style={{ fontSize: "13px" }}>
+                <b>Rs 1000.00</b>
+              </label>
             </div>
           </div>
         ) : user === "admin" ? (
@@ -104,7 +105,10 @@ const Navbar = (props) => {
         ) : (
           user == "" && (
             <div>
-              <button onClick={clickLogin} style={{ ...buttonStyle }}>
+              <button
+                onClick={() => setClickLogin(true)}
+                style={{ ...buttonStyle }}
+              >
                 Login
               </button>{" "}
               <button style={{ ...buttonStyle }}> Register</button>
