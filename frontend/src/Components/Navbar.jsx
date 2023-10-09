@@ -80,13 +80,14 @@ const Navbar = (props) => {
               <PersonSharpIcon
                 style={{ fontSize: "30px", cursor: "pointer" }}
               />
-              <label htmlFor="" style={{ fontSize: "13px" }}>
-                <b>Hello, Rajapaksha</b>
-              </label>
+
+
+              <b>Pasan</b>
+
             </div>
 
             <div className="cart">
-              <Badge badgeContent={props.number} color="primary">
+              <Badge badgeContent={4} color="primary">
                 <ShoppingCartIcon
                   style={{
                     fontSize: "30px",
@@ -95,9 +96,13 @@ const Navbar = (props) => {
                   }}
                 />
               </Badge>
+
+              <br />
+
               <label htmlFor="" style={{ fontSize: "13px" }}>
                 <b>Rs 1000.00</b>
               </label>
+
             </div>
           </div>
         ) : user === "admin" ? (
