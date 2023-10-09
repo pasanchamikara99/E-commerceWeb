@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
-
-import one from "../assets/Images/one.png";
 import { SliderImage } from "../Components/SliderImage";
-import { Login } from "../Components/Modal/Login";
+import "../Components/SliderImage.css";
 
 export const Home = (props) => {
   const [number, setNumber] = useState(props.name);
@@ -18,7 +16,10 @@ export const Home = (props) => {
 
       <SliderImage />
 
-      {/* {number == true ? <Login name={true} /> : <p></p>} */}
+      <div className="sectionOne">
+        <label htmlFor="">New Products</label>
+        <label htmlFor="">New Products</label>
+      </div>
     </div>
   );
 };

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../Modal/modal.css";
+import { LoginModal } from "../../Context/LoginModal";
 
-export const Login = (props) => {
-  const [modal, setModal] = useState(props.name);
+export const Login = () => {
+  const { clickLogin, setClickLogin } = useContext(LoginModal);
 
-  console.log(modal);
+  const [modal, setModal] = useState(clickLogin);
+
+  // console.log(clickLogin);
 
   const toggleModal = () => {
-    setModal(!modal);
+    setClickLogin(false);
   };
 
   if (modal) {
