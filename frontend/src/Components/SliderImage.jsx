@@ -12,31 +12,29 @@ export const SliderImage = () => {
   const itemsArray = [
     {
       imageSrc: imageOne,
-      text: "Discover the Latest Trends",
+      heading: "Discover the Latest Trends",
       style: {
         backgroundColor: "lightblue",
         color: "black",
-        fontSize: "50px",
         padding: "10px",
       },
     },
     {
       imageSrc: imageTwo,
-      text: "Item 2",
+      heading: "Item 2",
       style: {
         backgroundColor: "lightgreen",
         color: "black",
-        fontSize: "50px",
+
         padding: "10px",
       },
     },
     {
       imageSrc: imageThree,
-      text: "Item 3",
+      heading: "Item 3",
       style: {
         backgroundColor: "lightcoral",
         color: "white",
-        fontSize: "50px",
         padding: "10px",
       },
     },
@@ -51,9 +49,18 @@ export const SliderImage = () => {
               <div>
                 <div
                   key={index}
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    maxHeight: "400px",
+                  }}
                 >
-                  <h2 style={item.style}>{item.text}</h2>
+                  <div>
+                    <h2 style={item.style}>{item.heading}</h2>
+                    <br />
+                    <h4 style={item.style}>{item.heading}</h4>
+                  </div>
+
                   <img
                     src={item.imageSrc}
                     alt={`Item ${index + 1}`}

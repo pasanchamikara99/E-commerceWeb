@@ -1,0 +1,62 @@
+.productcontainer {
+
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2rem;
+
+}
+
+
+.button,
+.addToCart {
+    padding: 10px;
+    width: 50px;
+    width: 40%;
+    align-items: center,
+}
+
+.button button {
+    padding: 10px;
+    height: 40px;
+    font-size: 15px;
+    width: 40px;
+    margin: 5px;
+    text-align: center;
+}
+
+.addToCart button {
+    padding: 10px;
+    height: 40px;
+    font-size: 15px;
+    margin: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.details {
+    padding: 5px;
+}
+
+.details h3 {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.details h4 {
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+.details label {
+    font-size: 15px;
+    font-weight: 500;
+    color: grey;
+}
+
+.details li {
+    font-size: 13px;
+    color: gray;
+
+}

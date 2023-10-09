@@ -5,13 +5,10 @@ import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Badge } from "@mui/material";
 import { LoginModal } from "../Context/LoginModal";
 import "../index.css";
+import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   const user = "user";
-
-  const { clickLogin, setClickLogin } = useContext(LoginModal);
-
-  console.log("navbar ", clickLogin);
 
   const buttonStyle = {
     padding: "10px",
@@ -22,7 +19,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="container">
+    <div className="container" style={{ marginLeft: "2rem" }}>
       <div
         className="wrapper"
         style={{
@@ -77,13 +74,15 @@ const Navbar = (props) => {
             }}
           >
             <div className="profile">
-              <PersonSharpIcon
-                style={{ fontSize: "30px", cursor: "pointer" }}
-              />
-
-
-              <b>Pasan</b>
-
+              <Link
+                to="/profile"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <PersonSharpIcon
+                  style={{ fontSize: "30px", cursor: "pointer" }}
+                />
+                <b>Pasan</b>
+              </Link>
             </div>
 
             <div className="cart">
@@ -102,7 +101,6 @@ const Navbar = (props) => {
               <label htmlFor="" style={{ fontSize: "13px" }}>
                 <b>Rs 1000.00</b>
               </label>
-
             </div>
           </div>
         ) : user === "admin" ? (
@@ -110,13 +108,13 @@ const Navbar = (props) => {
         ) : (
           user == "" && (
             <div>
-              <button
-                onClick={() => setClickLogin(true)}
-                style={{ ...buttonStyle }}
-              >
-                Login
-              </button>{" "}
-              <button style={{ ...buttonStyle }}> Register</button>
+              <Link to="/login" style={buttonStyle}>
+                Sign In
+              </Link>
+
+              <Link to="/register" style={buttonStyle}>
+                Sign Up
+              </Link>
             </div>
           )
         )}
