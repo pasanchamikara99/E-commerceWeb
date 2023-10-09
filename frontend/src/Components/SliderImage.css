@@ -1,0 +1,40 @@
+.left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Optional: Center content horizontally */
+    text-align: center;
+    /* Optional: Center text horizontally */
+}
+
+/* Style for the image */
+.left img {
+    width: 100px;
+    /* Adjust the width as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+}
+
+/* Style for the labels */
+.left label {
+    margin-top: 10px;
+    /* Add spacing between the image and labels */
+    font-size: 14px;
+    /* Adjust the font size as needed */
+}
+
+
+.sectionOne {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin: 15px;
+    /* Add any other styles you need */
+}
+
+/* Additional styles for the labels if necessary */
+.sectionOne label {
+    /* Add styles for the labels here */
+    margin: 5px;
+}
