@@ -43,45 +43,30 @@ export const SliderImage = () => {
   ];
 
   return (
-
-    <div className="slide-container">
-      <Fade>
-        {itemsArray.map((item, index) => (
-          <div className="slider" key={index} style={item.style}>
-            <div>
-              <div
-                key={index}
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <h2 style={item.style}>{item.text}</h2>
-                <img
-                  src={item.imageSrc}
-                  alt={`Item ${index + 1}`}
-                  style={{ height: "500px" }}
-                />
-              </div>
-              <button
-                style={{
-                  padding: "20px",
-                  border: "2px solid black",
-                  fontSize: "20px",
-                  backgroundColor: "transparent",
-                  marginLeft: "20px",
-
     <>
       <div className="slide-container">
         <Fade>
-          
-
-                }}
-              >
+          {itemsArray.map((item, index) => (
+            <div className="slider" key={index} style={item.style}>
+              <div>
+                <div
+                  key={index}
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  <h2 style={item.style}>{item.text}</h2>
+                  <img
+                    src={item.imageSrc}
+                    alt={`Item ${index + 1}`}
+                    style={{ height: "500px" }}
+                  />
+                </div>
                 <button
                   style={{
                     padding: "20px",
                     border: "2px solid black",
                     fontSize: "20px",
-                    borderRadius: "6px",
-                    backgroundColor: "rgba(0, 0, 0, 0.2)",
+                    backgroundColor: "transparent",
+                    marginLeft: "20px",
                   }}
                 >
                   Order Now
