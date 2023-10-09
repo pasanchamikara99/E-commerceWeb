@@ -37,3 +37,11 @@
 .login button:hover {
     background-color: crimson;
 }
+
+.error {
+    background-color: #F42424;
+    color: white;
+    padding: 8px;
+
+
+}
