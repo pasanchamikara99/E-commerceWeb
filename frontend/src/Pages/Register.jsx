@@ -1,63 +1,23 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
+import axios from "axios";
+import { useSignup } from "../Hooks/UseSignUp";
 
 import "./Login.css";
 import { Link } from "react-router-dom";
 
 export const Register = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const [errors, setErrors] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
-
-  const validateForm = () => {
-    const newErrors = {
-      username: "",
-      email: "",
-      password: "",
-    };
-
-    if (!formData.username) {
-      newErrors.username = "Username is required";
-    }
-
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters long";
-    }
-
-    setErrors(newErrors);
-  };
-
-  // Handle form input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [firstname, setfName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signup, error, isLoading } = useSignup();
+  const [userType, setType] = useState("user");
 
   // Handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    validateForm();
 
-    // Check if there are no errors
-    if (!Object.values(errors).some((error) => error !== "")) {
-      console.log("Form submitted successfully");
-    }
+    await signup(firstname, userType, email, password);
   };
 
   return (
@@ -75,30 +35,29 @@ export const Register = () => {
         </h2>
 
         <form onSubmit={handleSubmit}>
+          {error && <div className="error">{error}</div>}
           <input
             type="text"
             placeholder="Enter your name"
-            value={formData.username}
-            name="username"
-            onChange={handleInputChange}
+            onChange={(e) => setfName(e.target.value)}
+            value={firstname}
           />
-          {errors.username && <div className="error">{errors.username}</div>}
+
           <input
             type="text"
             placeholder="Email "
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
-          {errors.email && <div className="error">{errors.email}</div>}
+
           <input
             type="password"
             placeholder="Password"
             name="password"
-            value={formData.password}
-            onChange={handleInputChange}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
-          {errors.password && <div className="error">{errors.password}</div>}
+
           <button type="submit">Register</button>
           <br />
           <label style={{ fontSize: "15px" }}>Already Registered ?</label>
