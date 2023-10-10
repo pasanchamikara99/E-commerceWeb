@@ -8,7 +8,10 @@ import "../index.css";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  const user = "user";
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  console.log(user);
+  const userType = user.user.userType;
 
   const buttonStyle = {
     padding: "10px",
@@ -19,7 +22,7 @@ const Navbar = (props) => {
   };
 
   return (
-    <div className="container" style={{ marginLeft: "2rem" }}>
+    <div className="container">
       <div
         className="wrapper"
         style={{
@@ -64,7 +67,7 @@ const Navbar = (props) => {
             />
           </div>
         </div>
-        {user == "user" ? (
+        {userType == "user" ? (
           <div
             className="right"
             style={{
@@ -81,7 +84,7 @@ const Navbar = (props) => {
                 <PersonSharpIcon
                   style={{ fontSize: "30px", cursor: "pointer" }}
                 />
-                <b>Pasan</b>
+                <b>{user.user.firstname}</b>
               </Link>
             </div>
 
