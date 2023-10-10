@@ -66,4 +66,17 @@ userSchema.statics.signup = async function (
   return user;
 };
 
+userSchema.statics.login = async function (email, password) {
+  const user = await this.findOne({ email });
+
+  if (!user) {
+    throw Error("email or password is not valid");
+  }
+
+  if (password != user.password) {
+    throw Error("email or password is not valid");
+  }
+  return user;
+};
+
 module.exports = mongooes.model("User", userSchema);
