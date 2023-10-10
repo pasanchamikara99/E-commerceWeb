@@ -3,51 +3,18 @@ import Navbar from "../Components/Navbar";
 
 import "./Login.css";
 import { Link } from "react-router-dom";
+import { useLogin } from "../Hooks/UseLogin";
 
 export const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
 
-  const [errors, setErrors] = useState({
-    email: "",
-    password: "",
-  });
-
-  const validateForm = () => {
-    const newErrors = {
-      email: "",
-      password: "",
-    };
-
-    if (!formData.email) {
-      newErrors.email = "Email is required";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    }
-
-    setErrors(newErrors);
-  };
-
-  // Handle form input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  // Handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    validateForm();
-
-    // Check if there are no errors
-    if (!Object.values(errors).some((error) => error !== "")) {
-      console.log("Form submitted successfully");
-    }
+    await login(email, password);
   };
+
   return (
     <div>
       <Navbar />
@@ -63,22 +30,23 @@ export const Login = () => {
             Login
           </h2>
 
+          {error && <div className="error">{error}</div>}
           <input
             type="text"
             placeholder="Email"
             name="email"
-            value={formData.email}
-            onChange={handleInputChange}
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
           />
-          {errors.email && <div className="error">{errors.email}</div>}
+
           <input
             type="password"
             placeholder="Password"
             name="password"
-            value={formData.password}
-            onChange={handleInputChange}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
-          {errors.password && <div className="error">{errors.password}</div>}
+
           <button>LOGIN</button>
 
           <label style={{ fontSize: "15px" }}>Don't have an account ?</label>

@@ -2,25 +2,14 @@ const User = require("../Models/UserSchema");
 
 //login user
 const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
+    const user = await User.login(email, password);
 
-    // Find the user by email in the database
-    const user = await User.findOne({ email });
-
-    // If the user is not found, return an error
-    if (!user) {
-      return res.status(400).json({ message: "No user found" });
-    }
-
-    if (password === user.password) {
-      return res.status(200).json({ message: "Authentication successful" });
-    } else {
-      return res.status(401).json({ message: "Authentication failed" });
-    }
+    res.status(200).json({ user });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(400).json({ error: error.message });
   }
 };
 

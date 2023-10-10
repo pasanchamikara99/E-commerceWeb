@@ -7,11 +7,8 @@ import { LoginModal } from "../Context/LoginModal";
 import "../index.css";
 import { Link } from "react-router-dom";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
-  console.log(user);
-  const userType = user.user.userType;
 
   const buttonStyle = {
     padding: "10px",
@@ -67,7 +64,7 @@ const Navbar = (props) => {
             />
           </div>
         </div>
-        {userType == "user" ? (
+        {user && user.user.userType == "user" ? (
           <div
             className="right"
             style={{
@@ -84,7 +81,7 @@ const Navbar = (props) => {
                 <PersonSharpIcon
                   style={{ fontSize: "30px", cursor: "pointer" }}
                 />
-                <b>{user.user.firstname}</b>
+                <b>{user && user.user.firstname}</b>
               </Link>
             </div>
 
@@ -109,7 +106,7 @@ const Navbar = (props) => {
         ) : user === "admin" ? (
           <p>admin</p>
         ) : (
-          user == "" && (
+          user === null && (
             <div>
               <Link to="/login" style={buttonStyle}>
                 Sign In
