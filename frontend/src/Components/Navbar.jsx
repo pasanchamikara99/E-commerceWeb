@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Badge, Button } from "@mui/material";
 import { FaPlus, FaWindowClose, FaUpload } from "react-icons/fa";
 import Modal from "react-modal";
+import axios from "axios";
 
 import Swal from "sweetalert2";
 import { SignOut } from "../Hooks/UseSignOut";
@@ -13,6 +14,10 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const user = JSON.parse(localStorage.getItem("user"));
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [cartItem, setCartItem] = useState(data.length);
 
   const { logout } = SignOut();
 
@@ -76,6 +81,25 @@ const Navbar = () => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    console.log("Fetching data...");
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/v1/cart/getCart/${user.user._id}`
+      );
+      setData(response.data.carts);
+      setCartItem(response.data.carts.length);
+      setLoading(false);
+      fetchData();
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <div className="container">
       <div
@@ -89,7 +113,9 @@ const Navbar = () => {
       >
         <div className="left" style={{ width: "15%" }}>
           <b>
-            Cool Planet.com{" "}
+            <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+              CoolPlanet.com
+            </Link>
             {user && user.user.userType == "admin" ? <b>Admin</b> : <></>}{" "}
           </b>
         </div>
@@ -147,7 +173,7 @@ const Navbar = () => {
             </div>
 
             <div className="cart" onClick={openModal}>
-              <Badge badgeContent={4} color="primary">
+              <Badge badgeContent={cartItem} color="primary">
                 <ShoppingCartIcon
                   style={{
                     fontSize: "30px",
@@ -158,10 +184,6 @@ const Navbar = () => {
               </Badge>
 
               <br />
-
-              <label htmlFor="" style={{ fontSize: "13px" }}>
-                <b>Rs 1000.00</b>
-              </label>
             </div>
           </div>
         ) : user && user.user.userType === "admin" ? (
@@ -219,12 +241,16 @@ const Navbar = () => {
             <label style={{ color: "white", fontSize: "30px" }}>Cart</label>
           </center>
           <form onSubmit={handleSubmit}>
-            <input /> <br />
-            <input /> <br />
-            <input /> <br />
-            <input /> <br />
-            <input /> <br />
-            <input /> <br />
+            <ol>
+              {data &&
+                data.map((item) => (
+                  <>
+                    {" "}
+                    <li style={{ color: "white" }}>{item.productTile}</li>
+                    <li style={{ color: "white" }}>{item.productPrice}</li>
+                  </>
+                ))}
+            </ol>
             <center>
               <button
                 style={{
