@@ -45,3 +45,7 @@
   /* Add styles for the labels here */
   margin: 5px;
 }
+
+.productCard:hover {
+  border: 1px solid gray;
+}

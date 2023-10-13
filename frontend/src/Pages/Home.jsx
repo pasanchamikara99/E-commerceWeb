@@ -14,21 +14,23 @@ export const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
+    const fetchData = async () => {
+      console.log("Fetching data...");
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/api/v1/product/getAllProduct"
+        );
+        setData(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    console.log("Fetching data...");
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/api/v1/product/getAllProduct"
-      );
-      setData(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  console.log(data);
 
   const addToCart = async (id) => {
     const productID = id;
@@ -49,6 +51,10 @@ export const Home = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const clickProduct = (id) => {
+    console.log("Click", id);
   };
 
   return (
@@ -81,20 +87,21 @@ export const Home = () => {
                 style={{
                   padding: "5px",
                   margin: "10px",
-                  border: "1px solid black",
                   minWidth: "300px",
                   minHeight: "200px",
                 }}
+                onClick={() => clickProduct(item._id)}
               >
                 <img
-                  src=""
+                  src={item.imageLink}
                   alt="Product Image"
                   srcset=""
-                  style={{ width: "50px" }}
+                  style={{ width: "300px" }}
                 />
-                <h1>{item.title}</h1>
                 <center>
-                  <label>Price : Rs.{item.price}.00</label>
+                  <h3>{item.title}</h3>
+
+                  <label>Price : Rs.{item.price}</label>
                   <br />
                   <br />
                   <button

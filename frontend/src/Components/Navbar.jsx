@@ -86,7 +86,6 @@ const Navbar = () => {
   }, []);
 
   const fetchData = async () => {
-    console.log("Fetching data...");
     try {
       const response = await axios.get(
         `http://localhost:4000/api/v1/cart/getCart/${user.user._id}`
@@ -94,7 +93,6 @@ const Navbar = () => {
       setData(response.data.carts);
       setCartItem(response.data.carts.length);
       setLoading(false);
-      fetchData();
     } catch (error) {
       console.error("Error fetching data:", error);
     }
