@@ -31,12 +31,9 @@ export const useLogin = () => {
 
       if (json.user.userType === "user") {
         navigate("/");
-      } else if (json.user.type === "seller") {
-        navigate("/seller");
+      } else if (json.user.userType === "admin") {
+        navigate("/Admin");
       }
-      // else if(json.user.type === 'admin'){
-      //   navigate('/admin');
-      // }
     }
 
     //console.log(json.user);
