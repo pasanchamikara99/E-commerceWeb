@@ -9,6 +9,8 @@ import {
 import axios from "axios";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
+import storage from "../../../firebase/firebaseConfig";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./adminStyles.css";
 
 export const AdminProduct = () => {
@@ -19,9 +21,18 @@ export const AdminProduct = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [editmodalIsOpen, seteditIsOpen] = useState(false);
   const [productid, setId] = useState("");
+  const [imageLink, setImageLink] = useState("");
+  const [file, setFile] = useState("");
+  const [percent, setPercent] = useState(0);
+  const [productImage, setProductImage] = useState("");
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //Image upload file change handle
+  function handleUploadChange(event) {
+    setFile(event.target.files[0]);
+  }
 
   //Add Modal----------------------------------------------------------------
   function openModal() {
@@ -50,6 +61,7 @@ export const AdminProduct = () => {
       setProductTitle(product.title);
       setProductPrice(product.price);
       setProductQuantity(product.quantity);
+      setProductImage(product.imageLink);
       setSelectedOption(product.gender);
       setId(product._id);
     }
@@ -90,6 +102,7 @@ export const AdminProduct = () => {
         title,
         price,
         quantity,
+        imageLink,
         gender,
       }
     );
@@ -175,6 +188,7 @@ export const AdminProduct = () => {
             title,
             price,
             quantity,
+            imageLink,
             gender,
           }
         )
@@ -186,6 +200,40 @@ export const AdminProduct = () => {
       console.error("Error edit product:", error);
     }
   };
+
+  //Image upload
+  const handleUpload = () => {
+    if (!file) {
+      alert("Please upload an image first!");
+    }
+
+    const storageRef = ref(storage, `/files/${file.name}`);
+
+    // progress can be paused and resumed. It also exposes progress updates.
+    // Receives the storage reference and the file to upload.
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const percent = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+
+        // update progress
+        setPercent(percent);
+      },
+      (err) => console.log(err),
+      () => {
+        // download url
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log(url);
+          setImageLink(url);
+        });
+      }
+    );
+  };
+
   return (
     <div className="product">
       <h2>Product Management</h2>
@@ -217,10 +265,10 @@ export const AdminProduct = () => {
                 }}
               >
                 <img
-                  src=""
+                  src={item.imageLink}
                   alt="Product Image"
                   srcset=""
-                  style={{ width: "50px" }}
+                  style={{ width: "300px", height: "300px" }}
                 />
                 <h1>{item.title}</h1>
                 <center>
@@ -307,8 +355,16 @@ export const AdminProduct = () => {
                 color: "gray",
               }}
             >
-              <input type="file" style={{ display: "none" }} />
+              <input
+                type="file"
+                onChange={handleUploadChange}
+                style={{ display: "none" }}
+              />
               <FaUpload style={{ color: "gray" }} /> upload image
+              <button type="button" onClick={handleUpload}>
+                Upload
+              </button>
+              <p>{percent} "% done"</p>
             </label>
             <br />
             <select value={gender} onChange={handleChange} required>
@@ -378,7 +434,7 @@ export const AdminProduct = () => {
               value={quantity}
               required
             />{" "}
-            <br />
+            {/* <br />
             <label
               style={{
                 display: "inline-block",
@@ -390,9 +446,15 @@ export const AdminProduct = () => {
                 color: "gray",
               }}
             >
-              <input type="file" style={{ display: "none" }} />
+              <input
+                type="file"
+                onChange={handleUploadChange}
+                style={{ display: "none" }}
+              />
+              <p>{percent} "% done"</p>
               <FaUpload style={{ color: "gray" }} /> upload image
             </label>
+            <button type="button">Upload</button> */}
             <br />
             <select value={gender} onChange={handleChange} required>
               <option value="">-- Select One --</option>
@@ -411,7 +473,7 @@ export const AdminProduct = () => {
                   fontSize: "15px",
                 }}
               >
-                Add Product
+                Update Product
               </button>
             </center>
           </form>
