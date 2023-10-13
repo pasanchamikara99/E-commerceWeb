@@ -47,7 +47,7 @@ const UpdateProduct = async (req, res) => {
   };
   await Product.findByIdAndUpdate(id, updatedProduct)
     .then(() => {
-      res.status(200).send("Product Updated");
+      res.status(200).json("Product Updated");
     })
     .catch((err) => {
       console.log(err);
