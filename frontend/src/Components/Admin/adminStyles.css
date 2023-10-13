@@ -1,0 +1,9 @@
+.product button {
+    padding: 5px;
+    background-color: black;
+    border: none;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    color: white;
+}

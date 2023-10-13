@@ -7,6 +7,7 @@ import { Login } from "./Pages/Login";
 import { Register } from "./Pages/Register";
 import { SingleProduct } from "./Pages/SingleProduct";
 import { Profile } from "./Pages/Profile";
+import { AdminPage } from "./Pages/AdminPage";
 
 function App() {
   const [clickLogin, setClickLogin] = useState(false);
@@ -19,6 +20,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/Admin" element={<AdminPage />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
