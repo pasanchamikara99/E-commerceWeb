@@ -1,10 +1,10 @@
 const Product = require("../Models/ProductSchema");
 
 const AddProduct = async (req, res) => {
-  const { title, price, image, gender, quantity } = req.body;
+  const { title, price, imageLink, gender, quantity } = req.body;
 
   try {
-    const product = new Product({ title, price, image, gender, quantity });
+    const product = new Product({ title, price, imageLink, gender, quantity });
     const result = await product.save();
 
     res.status(200).json({ product: result });
@@ -37,11 +37,11 @@ const DeleteProduct = async (req, res) => {
 
 const UpdateProduct = async (req, res) => {
   const id = req.params.id;
-  const { title, price, image, gender, quantity } = req.body;
+  const { title, price, imageLink, gender, quantity } = req.body;
   let updatedProduct = {
     title,
     price,
-    image,
+    imageLink,
     gender,
     quantity,
   };
