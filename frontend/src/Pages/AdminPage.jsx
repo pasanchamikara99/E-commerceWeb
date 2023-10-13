@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
-import { EditAccount } from "../Components/EditAccount";
-import { EditAddress } from "../Components/EditAddress";
 import "../Pages/SingleProduct.css";
 import { AdminUserPage } from "../Components/Admin/AdminUserPage";
 import { AdminProduct } from "../Components/Admin/AdminProduct";
 
 export const AdminPage = () => {
   const [page, setPage] = useState(1);
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleClick = (index) => {
     setPage(index);
@@ -25,10 +25,12 @@ export const AdminPage = () => {
           <center>
             <img src=".alie" alt="image" />
             <br />
-            <label style={{ fontSize: "20px" }}>Pasan</label> <br />
-            <label style={{ fontSize: "13px" }}>
-              pasasnchamikara989@gmail.com
-            </label>
+            <label style={{ fontSize: "20px" }}>
+              {user.user.firstname}
+            </label>{" "}
+            <br />
+            <label style={{ fontSize: "13px" }}>{user.user.email}</label> <br />
+            <label style={{ fontSize: "13px" }}>{user.user.userType}</label>
           </center>
 
           <ul>

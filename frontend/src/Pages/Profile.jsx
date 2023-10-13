@@ -1,18 +1,58 @@
 import React, { useState } from "react";
 import Navbar from "../Components/Navbar";
 import Swal from "sweetalert2";
+import Modal from "react-modal";
 import "./SingleProduct.css";
 import { EditAccount } from "../Components/EditAccount";
 import { EditAddress } from "../Components/EditAddress";
 import { SignOut } from "../Hooks/UseSignOut";
 import { useNavigate } from "react-router-dom";
+import { FaPlus, FaWindowClose, FaUpload } from "react-icons/fa";
 
 export const Profile = () => {
   const [page, setPage] = useState(1);
+  const [prePassword, setPrePassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfrimPassword] = useState("");
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const { signout } = SignOut();
 
   const navigate = useNavigate();
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    // await login(email, password);
+
+    console.log("Product title ", productTitle);
+  };
+
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      backgroundColor: "black",
+    },
+  };
 
   const handleClick = (index) => {
     setPage(index);
@@ -40,16 +80,28 @@ export const Profile = () => {
 
       <div
         className="profilecontainer"
-        style={{ margin: "2rem", display: "flex" }}
+        style={{ margin: "2rem", display: "flex", minHeight: "600px" }}
       >
         <div className="profile">
           <center>
-            <img src=".alie" alt="image" />
-            <br />
-            <label style={{ fontSize: "20px" }}>Pasan</label> <br />
-            <label style={{ fontSize: "13px" }}>
-              pasasnchamikara989@gmail.com
+            <label
+              style={{
+                border: "1px solid white",
+                padding: "10px",
+                borderRadius: "30px",
+                minHeight: "800px",
+              }}
+            >
+              {" "}
+              <img src=".alie" alt="image" />
             </label>
+            <br />
+            <br />
+            <label style={{ fontSize: "20px" }}>
+              {user.user.firstname}
+            </label>{" "}
+            <br />
+            <label style={{ fontSize: "13px" }}>{user.user.email}</label>
           </center>
 
           <ul>
@@ -58,11 +110,11 @@ export const Profile = () => {
             </li>
 
             <li>
-              <button onClick={() => handleClick(2)}>Edit Address</button>
+              <button onClick={() => handleClick(3)}>Edit Account</button>
             </li>
 
             <li>
-              <button onClick={() => handleClick(3)}>Edit Account</button>
+              <button onClick={openModal}>Change Password</button>
             </li>
 
             <li>
@@ -74,7 +126,7 @@ export const Profile = () => {
         <div
           className="items"
           style={{
-            backgroundColor: "red",
+            // backgroundColor: "red",
             padding: "10px",
             width: "100%",
           }}
@@ -87,12 +139,69 @@ export const Profile = () => {
               molestiae adipisci dicta est debitis! Enim quas perspiciatis
               saepe!
             </p>
-          ) : page === 2 ? (
-            <EditAccount />
           ) : (
-            <EditAddress />
+            <EditAccount />
           )}
         </div>
+
+        <Modal
+          isOpen={modalIsOpen}
+          onAfterOpen={afterOpenModal}
+          onRequestClose={closeModal}
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <button
+            onClick={closeModal}
+            style={{ backgroundColor: "transparent", border: "none" }}
+          >
+            <FaWindowClose style={{ color: "white", fontSize: "40px" }} />
+          </button>
+          <div className="modal">
+            <center>
+              <label style={{ color: "white", fontSize: "30px" }}>
+                Change Password
+              </label>
+            </center>
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                placeholder="Enter Previous Password"
+                onChange={(e) => setPrePassword(e.target.value)}
+                value={prePassword}
+              />{" "}
+              <br />
+              <input
+                type="text"
+                placeholder="Enter New Password "
+                onChange={(e) => setNewPassword(e.target.value)}
+                value={newPassword}
+              />
+              <br />
+              <input
+                type="text"
+                placeholder="Confirm New Password "
+                onChange={(e) => setConfrimPassword(e.target.value)}
+                value={confirmPassword}
+              />
+              <br />
+              <center>
+                <button
+                  style={{
+                    color: "white",
+                    padding: "8px",
+                    width: "300px",
+                    backgroundColor: "black",
+                    border: "1px solid white",
+                    fontSize: "15px",
+                  }}
+                >
+                  Add Product
+                </button>
+              </center>
+            </form>
+          </div>
+        </Modal>
       </div>
     </div>
   );

@@ -55,4 +55,22 @@ const UpdateProduct = async (req, res) => {
     });
 };
 
-module.exports = { AddProduct, AllProducts, DeleteProduct, UpdateProduct };
+const getOneProduct = async (req, res) => {
+  const id = req.params.id;
+
+  const product = await Product.findById(id);
+
+  if (product) {
+    res.status(200).json(product);
+  } else {
+    res.status(404).send("Product Not Found");
+  }
+};
+
+module.exports = {
+  AddProduct,
+  AllProducts,
+  DeleteProduct,
+  UpdateProduct,
+  getOneProduct,
+};

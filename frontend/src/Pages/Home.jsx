@@ -7,15 +7,11 @@ import { Link } from "@mui/material";
 export const Home = (props) => {
   const [number, setNumber] = useState(props.name);
 
-  const handleClick = () => {
-    setNumber(number + 1);
-  };
-
   return (
     <div>
-      <Navbar number={number} />
+      <Navbar style={{ zIndex: "100" }} />
 
-      <SliderImage />
+      <SliderImage style={{ zIndex: "0" }} />
 
       <div className="sectionOne">
         <label htmlFor="">

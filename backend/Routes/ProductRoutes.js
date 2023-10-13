@@ -5,12 +5,15 @@ const {
   AllProducts,
   DeleteProduct,
   UpdateProduct,
+  getOneProduct,
 } = require("../Controllers/productController");
 
 router.post("/addProduct", AddProduct);
 
 //signup route
 router.get("/getAllProduct", AllProducts);
+
+router.get("/getOneProduct/:id", getOneProduct);
 
 router.delete("/deleteProduct/:id", DeleteProduct);
 

@@ -3,6 +3,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Badge, Button } from "@mui/material";
+import { FaPlus, FaWindowClose, FaUpload } from "react-icons/fa";
+import Modal from "react-modal";
 
 import Swal from "sweetalert2";
 import { SignOut } from "../Hooks/UseSignOut";
@@ -39,6 +41,39 @@ const Navbar = () => {
     color: "white",
     marginLeft: "10px",
     borderRadius: "5px",
+  };
+
+  const cartClick = () => {
+    console.log("cartClick");
+  };
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {}
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: "10px", // Adjust top position as needed
+      right: "10px", // Adjust right position as needed
+      left: "auto",
+      bottom: "auto",
+      transform: "none",
+      backgroundColor: "black",
+      transition: "right 0.5s ease",
+      zIndex: 9999,
+    },
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -111,7 +146,7 @@ const Navbar = () => {
               </Link>
             </div>
 
-            <div className="cart">
+            <div className="cart" onClick={openModal}>
               <Badge badgeContent={4} color="primary">
                 <ShoppingCartIcon
                   style={{
@@ -148,25 +183,65 @@ const Navbar = () => {
         )}
       </div>
 
-      {user && user.user.userType == "user" ? (
-        <div
-          className="navigation"
-          style={{
-            backgroundColor: "black",
-            height: "25px",
-            padding: "8px",
-            margin: "5px",
-          }}
+      <div
+        className="navigation"
+        style={{
+          backgroundColor: "black",
+          height: "25px",
+          padding: "8px",
+          margin: "5px",
+        }}
+      >
+        <label htmlFor="" style={{ color: "white" }}>
+          Men's Collection
+        </label>
+        <span style={{ margin: "0 5px", color: "white" }}>|</span>
+        <label style={{ color: "white" }}>Women's Collection</label>
+        <span style={{ margin: "0 5px", color: "white" }}>|</span>
+        <label style={{ color: "white" }}>Use Chatbot</label>
+      </div>
+
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <button
+          onClick={closeModal}
+          style={{ backgroundColor: "transparent", border: "none" }}
         >
-          <label htmlFor="">Men's Collection</label>
-          <span style={{ margin: "0 5px" }}>|</span>
-          <label htmlFor="">Women's Collection</label>
-          <span style={{ margin: "0 5px" }}>|</span>
-          <label htmlFor="">Use Chatbot</label>
+          <FaWindowClose style={{ color: "white", fontSize: "40px" }} />
+        </button>
+        <div className="modal">
+          <center>
+            <label style={{ color: "white", fontSize: "30px" }}>Cart</label>
+          </center>
+          <form onSubmit={handleSubmit}>
+            <input /> <br />
+            <input /> <br />
+            <input /> <br />
+            <input /> <br />
+            <input /> <br />
+            <input /> <br />
+            <center>
+              <button
+                style={{
+                  color: "white",
+                  padding: "8px",
+                  width: "300px",
+                  backgroundColor: "black",
+                  border: "1px solid white",
+                  fontSize: "15px",
+                }}
+              >
+                Add Product
+              </button>
+            </center>
+          </form>
         </div>
-      ) : (
-        <p></p>
-      )}
+      </Modal>
     </div>
   );
 };
