@@ -9,7 +9,7 @@ const AddProduct = async (req, res) => {
 
   const productTile = product.title;
   const productPrice = product.price;
-  const productImage = product.image == null ? "sfds" : product.image;
+  const productImage = product.imageLink;
 
   try {
     const cart = new Cart({

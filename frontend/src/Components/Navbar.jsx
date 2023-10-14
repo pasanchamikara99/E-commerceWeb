@@ -91,6 +91,7 @@ const Navbar = () => {
         `http://localhost:4000/api/v1/cart/getCart/${user.user._id}`
       );
       setData(response.data.carts);
+      console.log(response.data);
       setCartItem(response.data.carts.length);
       setLoading(false);
     } catch (error) {
@@ -239,14 +240,18 @@ const Navbar = () => {
             <label style={{ color: "white", fontSize: "30px" }}>Cart</label>
           </center>
           <form onSubmit={handleSubmit}>
-            <ol>
+            <ol style={{ listStyle: "none" }}>
               {data &&
                 data.map((item) => (
-                  <>
-                    {" "}
+                  <div className="cartItem">
+                    <img
+                      src={item.productImage}
+                      alt=""
+                      style={{ width: "100px", height: "50px" }}
+                    />
                     <li style={{ color: "white" }}>{item.productTile}</li>
                     <li style={{ color: "white" }}>{item.productPrice}</li>
-                  </>
+                  </div>
                 ))}
             </ol>
             <center>
