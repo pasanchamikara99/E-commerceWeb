@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./Routes/UserRoutes");
 const productRoutes = require("./Routes/ProductRoutes");
 const cartRoutes = require("./Routes/CartRoutes");
+const orderRoutes = require("./Routes/OrderRoutes");
 const cors = require("cors");
 
 //express app
@@ -16,6 +17,8 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
 
 app.use("/api/v1/cart", cartRoutes);
+
+app.use("/api/v1/order", orderRoutes);
 
 mongoose
   .connect(

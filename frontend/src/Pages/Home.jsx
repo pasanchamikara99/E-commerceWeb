@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [data, setData] = useState([]);
@@ -32,36 +33,41 @@ export const Home = () => {
 
   console.log(data);
 
-  const addToCart = async (id) => {
-    const productID = id;
-    try {
-      const response = await axios
-        .post(`http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`, {
-          productID,
-        })
-        .then(() => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Product added successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const addToCart = async (id) => {
+  //   const productID = id;
+  //   const quantity = 1;
+  //   try {
+  //     const response = await axios
+  //       .post(`http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`, {
+  //         productID,
+  //       })
+  //       .then(() => {
+  //         Swal.fire({
+  //           position: "center",
+  //           icon: "success",
+  //           title: "Product added successfully",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //       });
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  const navigate = useNavigate();
 
   const clickProduct = (id) => {
     console.log("Click", id);
+
+    navigate(`/product/${id}`);
   };
 
   return (
     <div>
       <Navbar style={{ zIndex: "100" }} />
 
-      {/* <SliderImage style={{ zIndex: "0" }} /> */}
+      <SliderImage style={{ zIndex: "0" }} />
 
       <div className="sectionOne">
         <label htmlFor="">
@@ -92,25 +98,30 @@ export const Home = () => {
                 }}
                 onClick={() => clickProduct(item._id)}
               >
-                <img
-                  src={item.imageLink}
-                  alt="Product Image"
-                  srcset=""
-                  style={{ width: "300px" }}
-                />
                 <center>
+                  <img
+                    src={item.imageLink}
+                    alt="Product Image"
+                    srcset=""
+                    style={{
+                      width: "250px",
+                      height: "250px",
+                      objectFit: "cover",
+                    }}
+                  />
+
                   <h3>{item.title}</h3>
 
                   <label>Price : Rs.{item.price}</label>
                   <br />
                   <br />
-                  <button
+                  {/* <button
                     style={{ padding: "8px", width: "150px" }}
-                    onClick={() => addToCart(item._id)}
+                    onClick={() => ViewProduct(item._id)}
                   >
                     <FaShoppingCart />
                     Add To Cart
-                  </button>
+                  </button> */}
                 </center>
               </div>
             ))}

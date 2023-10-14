@@ -5,6 +5,8 @@ import { Fade, Zoom, Slide } from "react-slideshow-image";
 import imageOne from "../assets/Images/one.jpg";
 import imageTwo from "../assets/Images/two.jpg";
 import imageThree from "../assets/Images/three.jpg";
+import exchange from "../assets/Images/exchange.png";
+import delivery from "../assets/Images/Delivery.png";
 
 import "../Components/SliderImage.css";
 
@@ -42,7 +44,7 @@ export const SliderImage = () => {
 
   return (
     <>
-      <div className="slide-container">
+      {/* <div className="slide-container">
         <Fade>
           {itemsArray.map((item, index) => (
             <div className="slider" key={index} style={item.style}>
@@ -82,8 +84,9 @@ export const SliderImage = () => {
             </div>
           ))}
         </Fade>
-      </div>
+      </div> */}
 
+      <img src={imageOne} alt="" width="100%" height={"500px"} />
       <br />
       <div
         className="details-container"
@@ -91,14 +94,15 @@ export const SliderImage = () => {
           backgroundColor: "gray",
           display: "flex",
           justifyContent: "space-between",
-          padding: "10px",
+
           alignItems: "center",
-          height: "80px",
+
+          minHeight: "100px",
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
         <div className="left">
-          <img src="../assets/Images/Delivery.png" alt="delivery" />
+          <img src={delivery} alt="delivery" width={"50px"} height={"50px"} />
           <label htmlFor="" style={{ fontWeight: "bold" }}>
             Free Shipping{" "}
           </label>
@@ -108,7 +112,7 @@ export const SliderImage = () => {
         </div>
         <div className="left">
           {" "}
-          <img src="../assets/Images/Delivery.png" alt="delivery" />
+          <img src={exchange} alt="delivery" />
           <label htmlFor="" style={{ fontWeight: "bold" }}>
             Returns And Exchange Available{" "}
           </label>

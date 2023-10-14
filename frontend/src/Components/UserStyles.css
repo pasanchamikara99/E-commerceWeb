@@ -33,3 +33,22 @@
 .editForm button:hover {
   background-color: crimson;
 }
+
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+
+}
+
+.buttons {
+  margin-left: 15px;
+}
+
+.buttons button {
+  border: none;
+  padding: 5px;
+  margin: 3px;
+}
