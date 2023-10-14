@@ -3,9 +3,11 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonSharpIcon from "@mui/icons-material/PersonSharp";
 import { Badge, Button } from "@mui/material";
-import { FaPlus, FaWindowClose, FaUpload } from "react-icons/fa";
+import { FaPlus, FaWindowClose, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import axios from "axios";
+
+import "./UserStyles.css";
 
 import Swal from "sweetalert2";
 import { SignOut } from "../Hooks/UseSignOut";
@@ -18,6 +20,7 @@ const Navbar = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cartItem, setCartItem] = useState(data.length);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const { logout } = SignOut();
 
@@ -48,10 +51,6 @@ const Navbar = () => {
     borderRadius: "5px",
   };
 
-  const cartClick = () => {
-    console.log("cartClick");
-  };
-
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -71,19 +70,17 @@ const Navbar = () => {
       left: "auto",
       bottom: "auto",
       transform: "none",
-      backgroundColor: "black",
+      backgroundColor: "white",
       transition: "right 0.5s ease",
       zIndex: 9999,
     },
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
-
   useEffect(() => {
     fetchData();
-  }, []);
+
+    setIsDeleted(false);
+  }, [isDeleted]);
 
   const fetchData = async () => {
     try {
@@ -91,12 +88,56 @@ const Navbar = () => {
         `http://localhost:4000/api/v1/cart/getCart/${user.user._id}`
       );
       setData(response.data.carts);
-      console.log(response.data);
       setCartItem(response.data.carts.length);
+      setquantity();
       setLoading(false);
+
+      console.log(response);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+
+    //fetchData();
+  };
+
+  const [quantity, setquantity] = useState([]);
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setquantity(quantity - 1);
+    }
+  };
+
+  const increaseQuantity = () => {
+    setquantity(quantity + 1);
+  };
+
+  const deleteItem = async (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = axios.delete(
+            `http://localhost:4000/api/v1/cart/deletecart/${id}`
+          );
+          setIsDeleted(true);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  };
+
+  const handleSubmit = () => {
+    navigate("/checkout");
   };
 
   return (
@@ -233,27 +274,48 @@ const Navbar = () => {
           onClick={closeModal}
           style={{ backgroundColor: "transparent", border: "none" }}
         >
-          <FaWindowClose style={{ color: "white", fontSize: "40px" }} />
+          <FaWindowClose style={{ color: "black", fontSize: "40px" }} />
         </button>
         <div className="modal">
           <center>
-            <label style={{ color: "white", fontSize: "30px" }}>Cart</label>
+            <label style={{ color: "black", fontSize: "30px" }}>My Cart</label>
           </center>
           <form onSubmit={handleSubmit}>
-            <ol style={{ listStyle: "none" }}>
-              {data &&
-                data.map((item) => (
-                  <div className="cartItem">
-                    <img
-                      src={item.productImage}
-                      alt=""
-                      style={{ width: "100px", height: "50px" }}
-                    />
-                    <li style={{ color: "white" }}>{item.productTile}</li>
-                    <li style={{ color: "white" }}>{item.productPrice}</li>
+            {data &&
+              data.map((item) => (
+                <div className="cartItem">
+                  <img
+                    src={item.productImage}
+                    alt=""
+                    style={{ width: "50px", height: "50px" }}
+                  />
+
+                  <div className="info">
+                    <label>{item.productTile}</label>
+                    <div className="buttons">
+                      <button onClick={decreaseQuantity}>-</button>
+                      <label htmlFor="">{item.quantity}</label>
+                      <button onClick={increaseQuantity}>+</button>
+                    </div>
+
+                    <label htmlFor="" style={{ fontSize: "13px" }}>
+                      {" "}
+                      <b>
+                        {item.quantity} * Rs .{" "}
+                        {item.productPrice * item.quantity}
+                      </b>
+                    </label>
                   </div>
-                ))}
-            </ol>
+
+                  <button
+                    style={{ backgroundColor: "none", border: "none" }}
+                    onClick={() => deleteItem(item._id)}
+                  >
+                    <FaTrash style={{ color: "red", fontSize: "15px" }} />
+                  </button>
+                </div>
+              ))}
+
             <center>
               <button
                 style={{
@@ -265,7 +327,7 @@ const Navbar = () => {
                   fontSize: "15px",
                 }}
               >
-                Add Product
+                Check Out
               </button>
             </center>
           </form>

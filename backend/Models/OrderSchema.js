@@ -2,39 +2,38 @@ const mongooes = require("mongoose");
 
 const Schema = mongooes.Schema;
 
-const CartSchema = new Schema({
+const OrderSchema = new Schema({
   userID: {
     type: String,
     required: true,
   },
-  productID: {
+  address: {
     type: String,
     required: true,
   },
-  size: {
+  distirct: {
     type: String,
     required: false,
   },
-  productTile: {
+  city: {
     type: String,
     required: true,
   },
-  productPrice: {
+  mobilenumber: {
     type: Number,
     required: true,
   },
-  productImage: {
+  email: {
     type: String,
     required: true,
   },
-  quantity: {
+  totalPrice: {
     type: Number,
-    required: false,
+    required: true,
   },
-  color: {
-    type: String,
-    required: false,
+  product: {
+    type: Array,
   },
 });
 
-module.exports = mongooes.model("Cart", CartSchema);
+module.exports = mongooes.model("Orders", OrderSchema);

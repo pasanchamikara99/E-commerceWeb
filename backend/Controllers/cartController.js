@@ -3,7 +3,7 @@ const Product = require("../Models/ProductSchema");
 
 const AddProduct = async (req, res) => {
   const userID = req.params.id;
-  const { productID, size, quantity } = req.body;
+  const { productID, selectedSize, quantity } = req.body;
 
   const product = await Product.findById(productID);
 
@@ -15,7 +15,7 @@ const AddProduct = async (req, res) => {
     const cart = new Cart({
       userID,
       productID,
-      size,
+      size: selectedSize,
       quantity,
       productTile,
       productPrice,
@@ -44,4 +44,17 @@ const GetCart = async (req, res) => {
   }
 };
 
-module.exports = { AddProduct, GetCart };
+const DeleteCart = async (req, res) => {
+  const id = req.params.id;
+
+  await Cart.findByIdAndDelete(id)
+    .then(() => {
+      res.status(200).send("Product Deleted");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Delete Failed");
+    });
+};
+
+module.exports = { AddProduct, GetCart, DeleteCart };

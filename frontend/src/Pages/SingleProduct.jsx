@@ -1,10 +1,87 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import "./SingleProduct.css";
-import { Button, buttonBaseClasses } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { Button } from "@mui/material";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export const SingleProduct = () => {
   const sizes = ["XXL", "S", "M", "L", "XL"];
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [data, setData] = useState("");
+  const [error, setError] = useState("");
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const producId = useParams();
+  const id = producId.id;
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/v1/product/getOneProduct/${id}`
+      );
+      setData(response.data);
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const addToCart = async (id) => {
+    const productID = id;
+
+    console.log(productID);
+    console.log(quantity);
+    console.log(selectedSize);
+
+    if (selectedSize != null) {
+      setError("");
+      try {
+        const response = await axios
+          .post(
+            `http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`,
+            {
+              productID,
+              quantity,
+              selectedSize,
+            }
+          )
+          .then(() => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Product added successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    } else {
+      setError("Please Select Size");
+    }
+  };
+
+  const handleSizeClick = (size) => {
+    setSelectedSize(size);
+  };
+  const descreseQty = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const increseQty = () => {
+    setQuantity(quantity + 1);
+  };
 
   return (
     <div>
@@ -14,25 +91,38 @@ export const SingleProduct = () => {
         <div
           className="image"
           style={{
-            backgroundColor: "red",
             minHeight: "500px",
-            minWidth: "30%",
-            border: "1px solid black",
+            maxWidth: "30%",
           }}
         >
-          <img src="" alt="Image" />
+          <img
+            src={data.imageLink}
+            alt="Image"
+            style={{ maxWidth: "400px", height: "600px" }}
+          />
         </div>
 
         <div
           className="details"
           style={{
-            minWidth: "40%",
+            maxWidth: "40%",
             minHeight: "500px",
+            padding: "40px",
           }}
         >
-          <h3>Moose Men’s Elegant Slim Fit Polo T-Shirt – Storm Gray</h3>
+          <p
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              textAlign: "center",
+              padding: "3px",
+            }}
+          >
+            {error}
+          </p>
+          <h3>{data.title}</h3>
 
-          <h4>Rs 2500 .00 </h4>
+          <h4>Rs {data.price}</h4>
 
           <label htmlFor="">About the fabric</label>
           <ul>
@@ -64,7 +154,10 @@ export const SingleProduct = () => {
                     color: "black",
                     border: "1px solid gray",
                     margin: "2px",
+                    backgroundColor:
+                      selectedSize === size ? "lightblue" : "transparent",
                   }}
+                  onClick={() => handleSizeClick(size)}
                 >
                   {size}
                 </Button>
@@ -79,9 +172,9 @@ export const SingleProduct = () => {
             }}
           >
             <div className="button">
-              <button>-</button>
-              <label>1</label>
-              <button>+</button>
+              <button onClick={descreseQty}>-</button>
+              <label>{quantity}</label>
+              <button onClick={increseQty}>+</button>
             </div>
 
             <div className="addToCart">
@@ -91,6 +184,7 @@ export const SingleProduct = () => {
                   color: "white",
                   border: "none",
                 }}
+                onClick={() => addToCart(data._id)}
               >
                 ADD TO CART
               </button>

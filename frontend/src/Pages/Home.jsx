@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
   const [data, setData] = useState([]);
@@ -32,29 +33,34 @@ export const Home = () => {
 
   console.log(data);
 
-  const addToCart = async (id) => {
-    const productID = id;
-    try {
-      const response = await axios
-        .post(`http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`, {
-          productID,
-        })
-        .then(() => {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Product added successfully",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  // const addToCart = async (id) => {
+  //   const productID = id;
+  //   const quantity = 1;
+  //   try {
+  //     const response = await axios
+  //       .post(`http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`, {
+  //         productID,
+  //       })
+  //       .then(() => {
+  //         Swal.fire({
+  //           position: "center",
+  //           icon: "success",
+  //           title: "Product added successfully",
+  //           showConfirmButton: false,
+  //           timer: 1500,
+  //         });
+  //       });
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  const navigate = useNavigate();
 
   const clickProduct = (id) => {
     console.log("Click", id);
+
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -104,13 +110,13 @@ export const Home = () => {
                   <label>Price : Rs.{item.price}</label>
                   <br />
                   <br />
-                  <button
+                  {/* <button
                     style={{ padding: "8px", width: "150px" }}
-                    onClick={() => addToCart(item._id)}
+                    onClick={() => ViewProduct(item._id)}
                   >
                     <FaShoppingCart />
                     Add To Cart
-                  </button>
+                  </button> */}
                 </center>
               </div>
             ))}
