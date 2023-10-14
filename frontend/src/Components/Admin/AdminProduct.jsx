@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import storage from "../../../firebase/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./adminStyles.css";
+import "./adminCards.css";
 
 export const AdminProduct = () => {
   const [title, setProductTitle] = useState("");
@@ -253,46 +254,117 @@ export const AdminProduct = () => {
         ) : (
           <>
             {data.map((item, index) => (
-              <div
-                key={index} // Make sure to use a unique key for each element
-                className="productCard"
-                style={{
-                  padding: "5px",
-                  margin: "10px",
-                  border: "1px solid black",
-                  minWidth: "300px",
-                  minHeight: "200px",
-                }}
-              >
-                <img
-                  src={item.imageLink}
-                  alt="Product Image"
-                  srcset=""
-                  style={{ width: "300px", height: "300px" }}
-                />
-                <h1>{item.title}</h1>
-                <center>
-                  <label>Price : Rs.{item.price}.00</label>
-                  <p>Quantity :{item.quantity}</p>
-                  <h5>Type :{item.gender}</h5>
-                </center>
+              // <div
+              //   key={index} // Make sure to use a unique key for each element
+              //   className="productCard"
+              //   style={{
+              //     padding: "5px",
+              //     margin: "10px",
+              //     border: "1px solid black",
+              //     minWidth: "300px",
+              //     minHeight: "200px",
+              //   }}
+              // >
+              //   <img
+              //     src={item.imageLink}
+              //     alt="Product Image"
+              //     srcset=""
+              //     style={{ width: "300px", height: "300px" }}
+              //   />
+              //   <h1>{item.title}</h1>
+              //   <center>
+              //     <label>Price : Rs.{item.price}.00</label>
+              //     <p>Quantity :{item.quantity}</p>
+              //     <h5>Type :{item.gender}</h5>
+              //   </center>
 
-                <div
-                  className="buttons"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <button
-                    style={{ backgroundColor: "blue" }}
-                    onClick={() => openEditModal(item._id)}
-                  >
-                    <FaEdit style={{ fontSize: "20px" }} />
-                  </button>
-                  <button
-                    style={{ backgroundColor: "red" }}
-                    onClick={() => deleteProduct(item._id)}
-                  >
-                    <FaTrash style={{ fontSize: "20px" }} />
-                  </button>
+              //   <div
+              //     className="buttons"
+              //     style={{ display: "flex", justifyContent: "space-between" }}
+              //   >
+              //     <button
+              //       style={{ backgroundColor: "blue" }}
+              //       onClick={() => openEditModal(item._id)}
+              //     >
+              //       <FaEdit style={{ fontSize: "20px" }} />
+              //     </button>
+              //     <button
+              //       style={{ backgroundColor: "red" }}
+              //       onClick={() => deleteProduct(item._id)}
+              //     >
+              //       <FaTrash style={{ fontSize: "20px" }} />
+              //     </button>
+              //   </div>
+              // </div>
+
+              <div className="container">
+                <div className="row justify-content-center">
+                  <div className="col-12 col-sm-8 col-lg-6">
+                    {/* Section Heading */}
+                    <div
+                      className="section_heading text-center wow fadeInUp"
+                      data-wow-delay="0.2s"
+                      style={{
+                        visibility: "visible",
+                        animationDelay: "0.2s",
+                        animationName: "fadeInUp",
+                      }}
+                    >
+                      <div className="line"></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  {/* Single Advisor */}
+                  <div className="col-12 col-sm-6 col-lg-3">
+                    <div
+                      className="single_advisor_profile wow fadeInUp"
+                      data-wow-delay="0.2s"
+                      style={{
+                        visibility: "visible",
+                        animationDelay: "0.2s",
+                        animationName: "fadeInUp",
+                      }}
+                    >
+                      {/* Team Thumb */}
+                      <div className="advisor_thumb">
+                        <img src={item.imageLink} alt="" />
+                        {/* Social Info */}
+                        <div className="social-info">
+                          <a href="#">
+                            <i className="fa fa-facebook"></i>
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-twitter"></i>
+                          </a>
+                          <a href="#">
+                            <i className="fa fa-linkedin"></i>
+                          </a>
+                        </div>
+                      </div>
+                      {/* Team Details */}
+                      <div className="single_advisor_details_info">
+                        <h6>{item.title}</h6>
+                        <p className="designation">
+                          Price : Rs.{item.price}.00
+                        </p>
+                        <h5>Quantity : {item.quantity}</h5>
+                        <h5>Gender : {item.gender}</h5>
+                        <button
+                          style={{ backgroundColor: "blue" }}
+                          onClick={() => openEditModal(item._id)}
+                        >
+                          <FaEdit style={{ fontSize: "20px" }} />
+                        </button>
+                        <button
+                          style={{ backgroundColor: "red" }}
+                          onClick={() => deleteProduct(item._id)}
+                        >
+                          <FaTrash style={{ fontSize: "20px" }} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
