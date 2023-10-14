@@ -23,3 +23,49 @@
 .adminDashboard {
     background-color: var(--var-main-darkest);
 }
+
+.card-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 2em auto;
+    background-color: var(--var-card-dark);
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    padding: 2rem;
+}
+
+.profilecontainer .profile {
+    background-color: var(--var-card-dark);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profilecontainer {
+    border-radius: 15px;
+  }
+  
+  .profile button {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid white;
+    min-width: 250px;
+    color: white;
+    text-align: center;
+  }
+  
+  .profile ul {
+    list-style: none;
+    margin-right: 30px;
+  }
+  
+  .profile button:hover {
+    background-color: white;
+    color: black;
+  }
+  

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
+import 'jspdf-autotable';
 import {
   FaPlus,
   FaWindowClose,
@@ -235,15 +238,58 @@ export const AdminProduct = () => {
     );
   };
 
+  function generatePDF(data) {
+    const doc = new jsPDF();
+
+    // Define the columns for your table
+    const columns = ["Title", "Price", "Quantity", "Gender"];
+
+    // Define the data for your table
+    const tableData = data.map((item) => [
+      item.title,
+      `Rs.${item.price}.00`,
+      item.quantity,
+      item.gender,
+    ]);
+
+    // Set the table headers and data
+    doc.autoTable({
+      head: [columns],
+      body: tableData,
+    });
+
+    // Save the PDF
+    doc.save("product_report.pdf");
+  }
+
   return (
     <div className="product">
-      <h2>Product Management</h2>
-      <button style={{}}>
-        <span style={{ marginRight: "8px" }} onClick={openModal}>
-          Add Product
-        </span>
-        <FaPlus />
-      </button>
+      <h2 style={{ textAlign: "center", marginBottom: "10px" }}>
+        Product Management
+      </h2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <button style={{ marginBottom: "10px" }}>
+          <span style={{ marginRight: "8px" }} onClick={openModal}>
+            Add Product
+          </span>
+          <FaPlus />
+        </button>
+        <button style={{}}>
+          <span
+            style={{ marginRight: "8px" }}
+            onClick={() => generatePDF(data)}
+          >
+            Inventory Report
+          </span>
+          <FaPlus />
+        </button>
+      </div>
 
       <div
         className="productList"
@@ -254,148 +300,59 @@ export const AdminProduct = () => {
         ) : (
           <>
             {data.map((item, index) => (
-              // <div
-              //   key={index} // Make sure to use a unique key for each element
-              //   className="productCard"
-              //   style={{
-              //     padding: "5px",
-              //     margin: "10px",
-              //     border: "1px solid black",
-              //     minWidth: "300px",
-              //     minHeight: "200px",
-              //   }}
-              // >
-              //   <img
-              //     src={item.imageLink}
-              //     alt="Product Image"
-              //     srcset=""
-              //     style={{ width: "300px", height: "300px" }}
-              //   />
-              //   <h1>{item.title}</h1>
-              //   <center>
-              //     <label>Price : Rs.{item.price}.00</label>
-              //     <p>Quantity :{item.quantity}</p>
-              //     <h5>Type :{item.gender}</h5>
-              //   </center>
-
-              //   <div
-              //     className="buttons"
-              //     style={{ display: "flex", justifyContent: "space-between" }}
-              //   >
-              //     <button
-              //       style={{ backgroundColor: "blue" }}
-              //       onClick={() => openEditModal(item._id)}
-              //     >
-              //       <FaEdit style={{ fontSize: "20px" }} />
-              //     </button>
-              //     <button
-              //       style={{ backgroundColor: "red" }}
-              //       onClick={() => deleteProduct(item._id)}
-              //     >
-              //       <FaTrash style={{ fontSize: "20px" }} />
-              //     </button>
-              //   </div>
-              // </div>
-
-              // <div className="container">
-              //   <div className="row justify-content-center">
-              //     <div className="col-12 col-sm-8 col-lg-6">
-              //       {/* Section Heading */}
-              //       <div
-              //         className="section_heading text-center wow fadeInUp"
-              //         data-wow-delay="0.2s"
-              //         style={{
-              //           visibility: "visible",
-              //           animationDelay: "0.2s",
-              //           animationName: "fadeInUp",
-              //         }}
-              //       >
-              //         <div className="line"></div>
-              //       </div>
-              //     </div>
-              //   </div>
-              //   <div className="row">
-              //     {/* Single Advisor */}
-              //     <div className="col-12 col-sm-6 col-lg-3" style={{ marginRight: '50px' }}>
-              //       <div
-              //         className="single_advisor_profile wow fadeInUp"
-              //         data-wow-delay="0.2s"
-              //         style={{
-              //           visibility: "visible",
-              //           animationDelay: "0.2s",
-              //           animationName: "fadeInUp",
-              //         }}
-              //       >
-              //         {/* Team Thumb */}
-              //         <div className="advisor_thumb">
-              //           <img
-              //             src={item.imageLink}
-              //             alt=""
-              //             style={{ width: "300px", height: "300px" }}
-              //           />
-              //           {/* Social Info */}
-              //           <div className="social-info">
-              //             <a href="#">
-              //               <i className="fa fa-facebook"></i>
-              //             </a>
-              //             <a href="#">
-              //               <i className="fa fa-twitter"></i>
-              //             </a>
-              //             <a href="#">
-              //               <i className="fa fa-linkedin"></i>
-              //             </a>
-              //           </div>
-              //         </div>
-              //         {/* Team Details */}
-              //         <div className="single_advisor_details_info">
-              //           <h6>{item.title}</h6>
-              //           <p className="designation">
-              //             Price : Rs.{item.price}.00
-              //           </p>
-              //           <h5>Quantity : {item.quantity}</h5>
-              //           <h5>Gender : {item.gender}</h5>
-              //           <button
-              //             style={{ backgroundColor: "blue" }}
-              //             onClick={() => openEditModal(item._id)}
-              //           >
-              //             <FaEdit style={{ fontSize: "20px" }} />
-              //           </button>
-              //           <button
-              //             style={{ backgroundColor: "red" }}
-              //             onClick={() => deleteProduct(item._id)}
-              //           >
-              //             <FaTrash style={{ fontSize: "20px" }} />
-              //           </button>
-              //         </div>
-              //       </div>
-              //     </div>
-              //   </div>
-              // </div>
-
               <div className="card-container">
-              <a href="/" className="hero-image-container">
-                <img className="hero-image" src={item.imageLink} alt="Spinning glass cube" />
-              </a>
-              <main className="main-content">
-                <h1><a href="#">{item.title}</a></h1>
-                <p>Our Equilibrium collection promotes balance and calm.</p>
-                <div className="flex-row">
-                  <div className="coin-base">
-                    <img src="https://i.postimg.cc/T1F1K0bW/Ethereum.png" alt="Ethereum" className="small-image" />
-                    <h2>Price : Rs.{item.price}.00</h2>
+                <a href="/" className="hero-image-container">
+                  <img
+                    className="hero-image"
+                    src={item.imageLink}
+                    alt="Spinning glass cube"
+                  />
+                </a>
+                <main className="main-content">
+                  <h1>
+                    <a href="#">{item.title}</a>
+                  </h1>
+                  <p>Our Equilibrium collection promotes balance and calm.</p>
+                  <div className="flex-row">
+                    <div className="coin-base">
+                      <img
+                        src="https://i.postimg.cc/T1F1K0bW/Ethereum.png"
+                        alt="Ethereum"
+                        className="small-image"
+                      />
+                      <h2>Price : Rs.{item.price}.00</h2>
+                    </div>
+                    <div className="time-left">
+                      <img
+                        src="https://i.postimg.cc/prpyV4mH/clock-selection-no-bg.png"
+                        alt="clock"
+                        className="small-image"
+                      />
+                      <p>Quantity : {item.quantity}</p>
+                    </div>
                   </div>
-                  <div className="time-left">
-                    <img src="https://i.postimg.cc/prpyV4mH/clock-selection-no-bg.png" alt="clock" className="small-image" />
-                    <p>Quantity : {item.quantity}</p>
-                  </div>
+                </main>
+                <div className="card-attribute">
+                  <img
+                    src="https://i.postimg.cc/SQBzNQf1/image-avatar.png"
+                    alt="avatar"
+                    className="small-avatar"
+                  />
+                  <p>Gender : {item.gender}</p>
                 </div>
-              </main>
-              <div className="card-attribute">
-                <img src="https://i.postimg.cc/SQBzNQf1/image-avatar.png" alt="avatar" className="small-avatar" />
-                <p>Gender : {item.gender}</p>
+                <button
+                  style={{ backgroundColor: "blue" }}
+                  onClick={() => openEditModal(item._id)}
+                >
+                  <FaEdit style={{ fontSize: "20px" }} />
+                </button>
+                <button
+                  style={{ backgroundColor: "red" }}
+                  onClick={() => deleteProduct(item._id)}
+                >
+                  <FaTrash style={{ fontSize: "20px" }} />
+                </button>
               </div>
-            </div>
-
             ))}
           </>
         )}

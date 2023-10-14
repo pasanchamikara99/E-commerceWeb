@@ -5,6 +5,8 @@ import { AdminUserPage } from "../Components/Admin/AdminUserPage";
 import { AdminProduct } from "../Components/Admin/AdminProduct";
 import "./adminPage.css";
 
+import propic from "../assets/Images/propic.png";
+
 export const AdminPage = () => {
   const [page, setPage] = useState(1);
 
@@ -24,7 +26,7 @@ export const AdminPage = () => {
       >
         <div className="profile">
           <center>
-            <img src=".alie" alt="image" />
+            <img src={propic} alt="image" style={{ maxWidth: '100px', maxHeight: '100px' }}/>
             <br />
             <label style={{ fontSize: "20px" }}>
               {user.user.firstname}
