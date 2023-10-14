@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
-const { AddOrder, GetOrdersByID } = require("../Controllers/orderController");
+const {
+  AddFeedback,
+  GetFeedBackByProduct,
+  GetFeedBackByUser,
+} = require("../Controllers/feedbackController");
 
-router.post("/addFeedback", AddOrder);
+router.post("/addFeedback", AddFeedback);
 
-router.get("/getOrdersByProduct/:id", GetOrdersByID);
+router.get("/getFeedBacks/:id", GetFeedBackByProduct);
+
+router.get("/getFeedBacksUser/:id", GetFeedBackByUser);
+
 module.exports = router;

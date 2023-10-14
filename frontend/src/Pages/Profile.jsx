@@ -3,7 +3,7 @@ import Navbar from "../Components/Navbar";
 import Swal from "sweetalert2";
 import Modal from "react-modal";
 import "./SingleProduct.css";
-import { EditAccount } from "../Components/EditAccount";
+import { ViewFeedBacks } from "../Components/ViewFeedBacks";
 import { EditAddress } from "../Components/EditAddress";
 import { SignOut } from "../Hooks/UseSignOut";
 import { useNavigate } from "react-router-dom";
@@ -100,6 +100,9 @@ export const Profile = () => {
             <li>
               <button onClick={() => handleClick(1)}>My Orders</button>
             </li>
+            <li>
+              <button onClick={() => handleClick(2)}>My Feedbacks</button>
+            </li>
 
             <li>
               <button onClick={() => handleClick(3)}>Shipping Address</button>
@@ -128,7 +131,7 @@ export const Profile = () => {
           ) : page === 3 ? (
             <EditAddress />
           ) : (
-            <EditAccount />
+            <ViewFeedBacks />
           )}
         </div>
 
