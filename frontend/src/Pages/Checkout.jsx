@@ -3,19 +3,27 @@ import Navbar from "../Components/Navbar";
 import "./Checkout.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import visa from "../assets/Images/visa.png";
+import msCard from "../assets/Images/mscard.png";
 
 export const Checkout = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [firstname, setFirstname] = useState(user.user.firstname);
-  const [address, setAddress] = useState("");
-  const [distirct, setdistrct] = useState("");
-  const [city, setCity] = useState("");
+  const [address, setAddress] = useState(user.user.streetAddress);
+  const [distirct, setdistrct] = useState(user.user.district);
+  const [city, setCity] = useState(user.user.city);
   const [mobilenumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState(user.user.email);
   const [textArea, setTextArea] = useState("");
   const userID = user.user._id;
   const [items, setItems] = useState([]);
+
+  const [isButtonEnabled, setIsButtonEnabled] = useState(true);
+
+  const handleRadioChange = (e) => {
+    setIsButtonEnabled(false);
+  };
 
   const [data, setData] = useState([]);
 
@@ -138,6 +146,7 @@ export const Checkout = () => {
               rows="10"
               onChange={(e) => setTextArea(e.target.value)}
               value={textArea}
+              placeholder="  Message For Delivey"
             ></textarea>
           </div>
 
@@ -170,13 +179,101 @@ export const Checkout = () => {
               </tr>
             </table>
 
-            <div className="cardPayment">
-              <input type="text" /> <br />
-              <input type="text" />
-              <input type="text" />
-            </div>
+            <center>
+              <div className="cardPayment">
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    id=""
+                    value="visa"
+                    onChange={handleRadioChange}
+                    style={{ marginRight: "10px" }}
+                  />
+                  <img src={visa} alt="" srcSet="" width="70px" height="60px" />
 
-            <button>Place Order</button>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    id=""
+                    value="mastercard"
+                    onChange={handleRadioChange}
+                    style={{ marginRight: "10px" }}
+                  />
+                  <img
+                    src={msCard}
+                    alt=""
+                    srcSet=""
+                    width="70px"
+                    height="40px"
+                  />
+                </div>
+                {!isButtonEnabled && (
+                  <>
+                    <input
+                      type="text"
+                      style={{
+                        width: "90%",
+                        padding: "7px",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        border: "none",
+                        marginBottom: "2px",
+                      }}
+                      placeholder="Name on Card"
+                      required
+                    />
+                    <input
+                      type="text"
+                      style={{
+                        width: "90%",
+                        padding: "7px",
+                        textAlign: "center",
+                        fontSize: "18px",
+                        border: "none",
+                      }}
+                      placeholder="xxxx xxxx xxxx xxxx"
+                      required
+                    />
+
+                    <input
+                      type="number"
+                      style={{
+                        padding: "6px",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        border: "none",
+                        marginRight: "15px",
+                      }}
+                      placeholder="CVC"
+                      required
+                    />
+                    <input
+                      type="date"
+                      style={{
+                        padding: "6px",
+                        textAlign: "center",
+                        fontSize: "15px",
+                        border: "none",
+                        margin: "2px",
+                      }}
+                      required
+                    />
+                  </>
+                )}
+              </div>
+            </center>
+
+            <button
+              disabled={isButtonEnabled}
+              style={{
+                backgroundColor: isButtonEnabled ? "white" : "black",
+                color: isButtonEnabled ? "gray" : "white",
+                marginTop: "10px",
+              }}
+            >
+              Place Order
+            </button>
           </div>
         </div>
       </form>

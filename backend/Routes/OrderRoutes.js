@@ -1,17 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {
-  AddOrder,
-  //   AllProducts,
-  //   DeleteProduct,
-  //   UpdateProduct,
-  //   getOneProduct,
-} = require("../Controllers/orderController");
+const { AddOrder, GetOrdersByID } = require("../Controllers/orderController");
 
 router.post("/addOrder", AddOrder);
 
-// //signup route
-// router.get("/getAllProduct", AllProducts);
+router.get("/getOrders/:id", GetOrdersByID);
 
 // router.get("/getOneProduct/:id", getOneProduct);
 

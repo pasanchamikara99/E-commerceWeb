@@ -110,16 +110,6 @@ export const SingleProduct = () => {
             padding: "40px",
           }}
         >
-          <p
-            style={{
-              backgroundColor: "red",
-              color: "white",
-              textAlign: "center",
-              padding: "3px",
-            }}
-          >
-            {error}
-          </p>
           <h3>{data.title}</h3>
 
           <h4>Rs {data.price}</h4>
@@ -146,6 +136,18 @@ export const SingleProduct = () => {
           <br />
           <br />
 
+          {error && (
+            <p
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                textAlign: "center",
+                padding: "3px",
+              }}
+            >
+              {error}
+            </p>
+          )}
           <div style={{ display: "flex", flexDirection: "row" }}>
             {sizes.map((size, index) => (
               <div key={index}>

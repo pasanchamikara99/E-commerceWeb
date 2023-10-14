@@ -8,6 +8,8 @@ import { EditAddress } from "../Components/EditAddress";
 import { SignOut } from "../Hooks/UseSignOut";
 import { useNavigate } from "react-router-dom";
 import { FaPlus, FaWindowClose, FaUpload } from "react-icons/fa";
+import { UserOrders } from "../Components/UserOrders";
+import profile from "../assets/Images/profile.png";
 
 export const Profile = () => {
   const [page, setPage] = useState(1);
@@ -84,17 +86,7 @@ export const Profile = () => {
       >
         <div className="profile">
           <center>
-            <label
-              style={{
-                border: "1px solid white",
-                padding: "10px",
-                borderRadius: "30px",
-                minHeight: "800px",
-              }}
-            >
-              {" "}
-              <img src=".alie" alt="image" />
-            </label>
+            <img src={profile} alt="no" width={"150px"} />
             <br />
             <br />
             <label style={{ fontSize: "20px" }}>
@@ -110,7 +102,7 @@ export const Profile = () => {
             </li>
 
             <li>
-              <button onClick={() => handleClick(3)}>Edit Account</button>
+              <button onClick={() => handleClick(3)}>Shipping Address</button>
             </li>
 
             <li>
@@ -132,13 +124,9 @@ export const Profile = () => {
           }}
         >
           {page === 1 ? (
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-              Perferendis distinctio quasi consectetur? Facere facilis
-              necessitatibus corporis sed, aperiam aliquid quisquam molestias,
-              molestiae adipisci dicta est debitis! Enim quas perspiciatis
-              saepe!
-            </p>
+            <UserOrders />
+          ) : page === 3 ? (
+            <EditAddress />
           ) : (
             <EditAccount />
           )}

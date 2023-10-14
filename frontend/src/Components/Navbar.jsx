@@ -136,7 +136,7 @@ const Navbar = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const checkout = () => {
     navigate("/checkout");
   };
 
@@ -280,57 +280,61 @@ const Navbar = () => {
           <center>
             <label style={{ color: "black", fontSize: "30px" }}>My Cart</label>
           </center>
-          <form onSubmit={handleSubmit}>
-            {data &&
-              data.map((item) => (
-                <div className="cartItem">
-                  <img
-                    src={item.productImage}
-                    alt=""
-                    style={{ width: "50px", height: "50px" }}
-                  />
+          <div>
+            {data.map((item) => (
+              <div className="cartItem">
+                <img
+                  src={item.productImage}
+                  alt=""
+                  style={{ width: "50px", height: "50px" }}
+                />
 
-                  <div className="info">
-                    <label>{item.productTile}</label>
-                    <div className="buttons">
-                      <button onClick={decreaseQuantity}>-</button>
-                      <label htmlFor="">{item.quantity}</label>
-                      <button onClick={increaseQuantity}>+</button>
-                    </div>
-
-                    <label htmlFor="" style={{ fontSize: "13px" }}>
-                      {" "}
-                      <b>
-                        {item.quantity} * Rs .{" "}
-                        {item.productPrice * item.quantity}
-                      </b>
-                    </label>
+                <div className="info">
+                  <label style={{ fontSize: "15px", marginLeft: "10px" }}>
+                    {item.productTile}
+                  </label>
+                  <div className="buttons">
+                    <button onClick={decreaseQuantity}>-</button>
+                    <label htmlFor="">{item.quantity}</label>
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
 
-                  <button
-                    style={{ backgroundColor: "none", border: "none" }}
-                    onClick={() => deleteItem(item._id)}
+                  <label
+                    htmlFor=""
+                    style={{ fontSize: "13px", marginLeft: "20px" }}
                   >
-                    <FaTrash style={{ color: "red", fontSize: "15px" }} />
-                  </button>
+                    <b>
+                      {item.quantity} * Rs . {item.productPrice * item.quantity}
+                    </b>
+                  </label>
                 </div>
-              ))}
 
+                <button
+                  style={{ backgroundColor: "none", border: "none" }}
+                  onClick={() => deleteItem(item._id)}
+                >
+                  <FaTrash style={{ color: "red", fontSize: "15px" }} />
+                </button>
+              </div>
+            ))}
+            {data == "" && <p>Empty</p>}
             <center>
               <button
                 style={{
-                  color: "white",
+                  color: data == "" ? "black" : "white",
                   padding: "8px",
                   width: "300px",
-                  backgroundColor: "black",
-                  border: "1px solid white",
+                  backgroundColor: data == "" ? "white" : "black",
+                  border: "1px solid black",
                   fontSize: "15px",
                 }}
+                onClick={checkout}
+                disabled={data == "" ? true : false}
               >
                 Check Out
               </button>
             </center>
-          </form>
+          </div>
         </div>
       </Modal>
     </div>

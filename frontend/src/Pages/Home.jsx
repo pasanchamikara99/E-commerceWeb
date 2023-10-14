@@ -67,7 +67,7 @@ export const Home = () => {
     <div>
       <Navbar style={{ zIndex: "100" }} />
 
-      {/* <SliderImage style={{ zIndex: "0" }} /> */}
+      <SliderImage style={{ zIndex: "0" }} />
 
       <div className="sectionOne">
         <label htmlFor="">
@@ -98,13 +98,18 @@ export const Home = () => {
                 }}
                 onClick={() => clickProduct(item._id)}
               >
-                <img
-                  src={item.imageLink}
-                  alt="Product Image"
-                  srcset=""
-                  style={{ width: "300px" }}
-                />
                 <center>
+                  <img
+                    src={item.imageLink}
+                    alt="Product Image"
+                    srcset=""
+                    style={{
+                      width: "250px",
+                      height: "250px",
+                      objectFit: "cover",
+                    }}
+                  />
+
                   <h3>{item.title}</h3>
 
                   <label>Price : Rs.{item.price}</label>

@@ -26,4 +26,18 @@ const signupUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signupUser };
+const EditAddress = async (req, res) => {
+  const id = req.params.id;
+  const { streetAddress, district, city } = req.body;
+
+  await User.findByIdAndUpdate(id, { streetAddress, district, city })
+    .then(() => {
+      res.status(200).json("Address Updated");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send(500).send("Update Failed");
+    });
+};
+
+module.exports = { loginUser, signupUser, EditAddress };
