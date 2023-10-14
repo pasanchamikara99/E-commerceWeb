@@ -112,6 +112,7 @@ export const AdminUserPage = () => {
           </table>
         )}
       </div>
+
     </div>
   );
 };

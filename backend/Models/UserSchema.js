@@ -8,7 +8,15 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  address: {
+  streetAddress: {
+    type: String,
+    required: false,
+  },
+  district: {
+    type: String,
+    required: false,
+  },
+  city: {
     type: String,
     required: false,
   },

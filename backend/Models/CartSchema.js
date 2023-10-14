@@ -31,6 +31,10 @@ const CartSchema = new Schema({
     type: Number,
     required: false,
   },
+  color: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = mongooes.model("Cart", CartSchema);
