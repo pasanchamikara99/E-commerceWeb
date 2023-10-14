@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import "./SingleProduct.css";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { FeedBack } from "../Components/FeedBack";
 
 export const SingleProduct = () => {
   const sizes = ["XXL", "S", "M", "L", "XL"];
@@ -17,6 +18,8 @@ export const SingleProduct = () => {
 
   const producId = useParams();
   const id = producId.id;
+
+  const navigator = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -35,41 +38,44 @@ export const SingleProduct = () => {
   };
 
   const addToCart = async (id) => {
-    const productID = id;
+    if (user != null) {
+      const productID = id;
 
-    console.log(productID);
-    console.log(quantity);
-    console.log(selectedSize);
+      console.log(productID);
+      console.log(quantity);
+      console.log(selectedSize);
 
-    if (selectedSize != null) {
-      setError("");
-      try {
-        const response = await axios
-          .post(
-            `http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`,
-            {
-              productID,
-              quantity,
-              selectedSize,
-            }
-          )
-          .then(() => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Product added successfully",
-              showConfirmButton: false,
-              timer: 1500,
+      if (selectedSize != null) {
+        setError("");
+        try {
+          const response = await axios
+            .post(
+              `http://localhost:4000/api/v1/cart/addProduct/${user.user._id}`,
+              {
+                productID,
+                quantity,
+                selectedSize,
+              }
+            )
+            .then(() => {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Product added successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
             });
-          });
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      } else {
+        setError("Please Select Size");
       }
     } else {
-      setError("Please Select Size");
+      navigator("/login");
     }
   };
-
   const handleSizeClick = (size) => {
     setSelectedSize(size);
   };
@@ -194,6 +200,66 @@ export const SingleProduct = () => {
           </div>
         </div>
       </div>
+      {/* <div className="ratings" style={{ margin: "0 10rem" }}>
+        <p>FeedBacks</p>
+
+        <div
+          className="items"
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div className="rating" style={{ width: "60%", padding: "5px" }}>
+            <ol
+              style={{
+                listStyle: "none",
+                border: "1px solid gray",
+                padding: "10px",
+                maxWidth: "500px",
+              }}
+            >
+              <li style={{ fontWeight: "bold" }}>User Name</li>
+              <li
+                style={{
+                  maxWidth: "500px",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  fontSize: "12px",
+                }}
+              >
+                ssssssddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsssssText
+              </li>
+            </ol>
+          </div>
+          <form
+            action=""
+            style={{
+              width: "40%",
+
+              padding: "10px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Write Comment"
+              style={{ padding: "8px", width: "80%" }}
+            />
+            <br />
+            <button
+              style={{
+                padding: "6px",
+                margin: "5px 0 ",
+                backgroundColor: "black",
+                border: "none",
+                color: "white",
+              }}
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div> */}
+
+      <FeedBack />
     </div>
   );
 };
