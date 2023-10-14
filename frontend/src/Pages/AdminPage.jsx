@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import "../Pages/SingleProduct.css";
 import { AdminUserPage } from "../Components/Admin/AdminUserPage";
 import { AdminProduct } from "../Components/Admin/AdminProduct";
+import { AdminOrderPage } from "../Components/Admin/AdminOrderPage";
 import "./adminPage.css";
 
 import propic from "../assets/Images/propic.png";
@@ -26,7 +27,11 @@ export const AdminPage = () => {
       >
         <div className="profile">
           <center>
-            <img src={propic} alt="image" style={{ maxWidth: '100px', maxHeight: '100px' }}/>
+            <img
+              src={propic}
+              alt="image"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+            />
             <br />
             <label style={{ fontSize: "20px" }}>
               {user.user.firstname}
@@ -62,7 +67,7 @@ export const AdminPage = () => {
           {page === 1 ? (
             <AdminUserPage />
           ) : page === 2 ? (
-            <AdminUserPage />
+            <AdminOrderPage />
           ) : (
             <AdminProduct />
           )}

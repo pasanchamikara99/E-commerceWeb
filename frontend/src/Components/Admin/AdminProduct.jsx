@@ -348,7 +348,7 @@ export const AdminProduct = () => {
                   <FaEdit style={{ fontSize: "20px" }} />
                 </button>
                 <button
-                  style={{ backgroundColor: "red" }}
+                  style={{ backgroundColor: "red", marginTop: "20px" }}
                   onClick={() => deleteProduct(item._id)}
                 >
                   <FaTrash style={{ fontSize: "20px" }} />
