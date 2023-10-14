@@ -297,76 +297,105 @@ export const AdminProduct = () => {
               //   </div>
               // </div>
 
-              <div className="container">
-                <div className="row justify-content-center">
-                  <div className="col-12 col-sm-8 col-lg-6">
-                    {/* Section Heading */}
-                    <div
-                      className="section_heading text-center wow fadeInUp"
-                      data-wow-delay="0.2s"
-                      style={{
-                        visibility: "visible",
-                        animationDelay: "0.2s",
-                        animationName: "fadeInUp",
-                      }}
-                    >
-                      <div className="line"></div>
-                    </div>
+              // <div className="container">
+              //   <div className="row justify-content-center">
+              //     <div className="col-12 col-sm-8 col-lg-6">
+              //       {/* Section Heading */}
+              //       <div
+              //         className="section_heading text-center wow fadeInUp"
+              //         data-wow-delay="0.2s"
+              //         style={{
+              //           visibility: "visible",
+              //           animationDelay: "0.2s",
+              //           animationName: "fadeInUp",
+              //         }}
+              //       >
+              //         <div className="line"></div>
+              //       </div>
+              //     </div>
+              //   </div>
+              //   <div className="row">
+              //     {/* Single Advisor */}
+              //     <div className="col-12 col-sm-6 col-lg-3" style={{ marginRight: '50px' }}>
+              //       <div
+              //         className="single_advisor_profile wow fadeInUp"
+              //         data-wow-delay="0.2s"
+              //         style={{
+              //           visibility: "visible",
+              //           animationDelay: "0.2s",
+              //           animationName: "fadeInUp",
+              //         }}
+              //       >
+              //         {/* Team Thumb */}
+              //         <div className="advisor_thumb">
+              //           <img
+              //             src={item.imageLink}
+              //             alt=""
+              //             style={{ width: "300px", height: "300px" }}
+              //           />
+              //           {/* Social Info */}
+              //           <div className="social-info">
+              //             <a href="#">
+              //               <i className="fa fa-facebook"></i>
+              //             </a>
+              //             <a href="#">
+              //               <i className="fa fa-twitter"></i>
+              //             </a>
+              //             <a href="#">
+              //               <i className="fa fa-linkedin"></i>
+              //             </a>
+              //           </div>
+              //         </div>
+              //         {/* Team Details */}
+              //         <div className="single_advisor_details_info">
+              //           <h6>{item.title}</h6>
+              //           <p className="designation">
+              //             Price : Rs.{item.price}.00
+              //           </p>
+              //           <h5>Quantity : {item.quantity}</h5>
+              //           <h5>Gender : {item.gender}</h5>
+              //           <button
+              //             style={{ backgroundColor: "blue" }}
+              //             onClick={() => openEditModal(item._id)}
+              //           >
+              //             <FaEdit style={{ fontSize: "20px" }} />
+              //           </button>
+              //           <button
+              //             style={{ backgroundColor: "red" }}
+              //             onClick={() => deleteProduct(item._id)}
+              //           >
+              //             <FaTrash style={{ fontSize: "20px" }} />
+              //           </button>
+              //         </div>
+              //       </div>
+              //     </div>
+              //   </div>
+              // </div>
+
+              <div className="card-container">
+              <a href="/" className="hero-image-container">
+                <img className="hero-image" src={item.imageLink} alt="Spinning glass cube" />
+              </a>
+              <main className="main-content">
+                <h1><a href="#">{item.title}</a></h1>
+                <p>Our Equilibrium collection promotes balance and calm.</p>
+                <div className="flex-row">
+                  <div className="coin-base">
+                    <img src="https://i.postimg.cc/T1F1K0bW/Ethereum.png" alt="Ethereum" className="small-image" />
+                    <h2>Price : Rs.{item.price}.00</h2>
+                  </div>
+                  <div className="time-left">
+                    <img src="https://i.postimg.cc/prpyV4mH/clock-selection-no-bg.png" alt="clock" className="small-image" />
+                    <p>Quantity : {item.quantity}</p>
                   </div>
                 </div>
-                <div className="row">
-                  {/* Single Advisor */}
-                  <div className="col-12 col-sm-6 col-lg-3">
-                    <div
-                      className="single_advisor_profile wow fadeInUp"
-                      data-wow-delay="0.2s"
-                      style={{
-                        visibility: "visible",
-                        animationDelay: "0.2s",
-                        animationName: "fadeInUp",
-                      }}
-                    >
-                      {/* Team Thumb */}
-                      <div className="advisor_thumb">
-                        <img src={item.imageLink} alt="" />
-                        {/* Social Info */}
-                        <div className="social-info">
-                          <a href="#">
-                            <i className="fa fa-facebook"></i>
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-twitter"></i>
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-linkedin"></i>
-                          </a>
-                        </div>
-                      </div>
-                      {/* Team Details */}
-                      <div className="single_advisor_details_info">
-                        <h6>{item.title}</h6>
-                        <p className="designation">
-                          Price : Rs.{item.price}.00
-                        </p>
-                        <h5>Quantity : {item.quantity}</h5>
-                        <h5>Gender : {item.gender}</h5>
-                        <button
-                          style={{ backgroundColor: "blue" }}
-                          onClick={() => openEditModal(item._id)}
-                        >
-                          <FaEdit style={{ fontSize: "20px" }} />
-                        </button>
-                        <button
-                          style={{ backgroundColor: "red" }}
-                          onClick={() => deleteProduct(item._id)}
-                        >
-                          <FaTrash style={{ fontSize: "20px" }} />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              </main>
+              <div className="card-attribute">
+                <img src="https://i.postimg.cc/SQBzNQf1/image-avatar.png" alt="avatar" className="small-avatar" />
+                <p>Gender : {item.gender}</p>
               </div>
+            </div>
+
             ))}
           </>
         )}

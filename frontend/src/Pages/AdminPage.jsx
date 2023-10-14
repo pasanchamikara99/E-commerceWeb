@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar";
 import "../Pages/SingleProduct.css";
 import { AdminUserPage } from "../Components/Admin/AdminUserPage";
 import { AdminProduct } from "../Components/Admin/AdminProduct";
+import "./adminPage.css";
 
 export const AdminPage = () => {
   const [page, setPage] = useState(1);
@@ -14,7 +15,7 @@ export const AdminPage = () => {
   };
 
   return (
-    <div>
+    <div className="adminDashboard">
       <Navbar />
 
       <div
