@@ -26,4 +26,15 @@ const signupUser = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signupUser };
+//all users
+const allUsers = async (req, res) => {
+  User.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+module.exports = { loginUser, signupUser, allUsers };

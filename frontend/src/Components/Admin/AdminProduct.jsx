@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import jsPDF from "jspdf";
-import 'jspdf-autotable';
+import "jspdf-autotable";
 import {
   FaPlus,
   FaWindowClose,
@@ -89,7 +89,8 @@ export const AdminProduct = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "black",
+      backgroundColor: "rgb(21, 51, 90)",
+      borderRadius: "15px",
     },
   };
 
@@ -301,7 +302,7 @@ export const AdminProduct = () => {
           <>
             {data.map((item, index) => (
               <div className="card-container">
-                <a href="/" className="hero-image-container">
+                <a href="/">
                   <img
                     className="hero-image"
                     src={item.imageLink}
@@ -422,7 +423,11 @@ export const AdminProduct = () => {
               <button type="button" onClick={handleUpload}>
                 Upload
               </button>
-              <p>{percent} "% done"</p>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{ width: `${percent}%` }}>
+                  {percent}% done
+                </div>
+              </div>
             </label>
             <br />
             <select value={gender} onChange={handleChange} required>

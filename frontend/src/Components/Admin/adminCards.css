@@ -346,3 +346,22 @@ div.attribution {
         font-size: 18px;
     }
 }
+
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background-color: #ccc;
+    border: 1px solid #000;
+    margin: 10px 0;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: #007bff; /* Change to your desired color */
+    text-align: center;
+    line-height: 30px;
+    color: #fff;
+    transition: width 0.3s ease-in-out;
+  }
+  
