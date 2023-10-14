@@ -4,14 +4,15 @@ const {
   loginUser,
   signupUser,
   EditAddress,
+  GetAllUsers,
 } = require("../Controllers/userController");
 
-//login route
 router.post("/login", loginUser);
 
-//signup route
 router.post("/signup", signupUser);
 
 router.patch("/editAddress/:id", EditAddress);
+
+router.get("/getAllUsers", GetAllUsers);
 
 module.exports = router;

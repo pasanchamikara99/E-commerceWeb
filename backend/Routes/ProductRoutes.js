@@ -10,7 +10,6 @@ const {
 
 router.post("/addProduct", AddProduct);
 
-//signup route
 router.get("/getAllProduct", AllProducts);
 
 router.get("/getOneProduct/:id", getOneProduct);

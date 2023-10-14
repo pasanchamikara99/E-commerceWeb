@@ -40,4 +40,14 @@ const EditAddress = async (req, res) => {
     });
 };
 
-module.exports = { loginUser, signupUser, EditAddress };
+const GetAllUsers = (req, res) => {
+  User.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+module.exports = { loginUser, signupUser, EditAddress, GetAllUsers };
