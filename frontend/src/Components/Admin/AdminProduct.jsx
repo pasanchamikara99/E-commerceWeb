@@ -33,6 +33,11 @@ export const AdminProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [filterGender, setFilterGender] = useState(""); // Step 1: Add filter state
+
+  const [minPrice, setMinPrice] = useState(""); // Minimum price filter
+  const [maxPrice, setMaxPrice] = useState(""); // Maximum price filter
+
   //Image upload file change handle
   function handleUploadChange(event) {
     setFile(event.target.files[0]);
@@ -51,6 +56,21 @@ export const AdminProduct = () => {
     setIsOpen(false);
   }
   //End Add Modal----------------------------------------------------------------
+
+  // Add an event handler for gender filtering
+  const handleFilterChange = (e) => {
+    setFilterGender(e.target.value);
+  };
+
+    // Modify the rendering logic to filter products based on price range
+    const filteredData = data.filter((item) => {
+      if (!filterGender) return true; // Show all products if no gender filter is selected
+      return item.gender === filterGender;
+    }).filter((item) => {
+      if (!minPrice || !maxPrice) return true; // Show all products if no price range filters are set
+      const price = parseFloat(item.price);
+      return price >= minPrice && price <= maxPrice;
+    });
 
   //Edit Modal----------------------------------------------------------------
   const openEditModal = async (id) => {
@@ -275,13 +295,25 @@ export const AdminProduct = () => {
           alignItems: "center",
         }}
       >
-        <button style={{ marginBottom: "10px" }}>
+        <button
+          style={{
+            marginBottom: "10px",
+          }}
+        >
           <span style={{ marginRight: "8px" }} onClick={openModal}>
             Add Product
           </span>
           <FaPlus />
         </button>
-        <button style={{}}>
+        <button
+          style={{
+            backgroundColor: "#007BFF", // Background color
+            color: "#fff", // Text color
+            borderRadius: "5px", // Border radius
+            border: "none", // Remove border
+            cursor: "pointer", // Cursor on hover
+          }}
+        >
           <span
             style={{ marginRight: "8px" }}
             onClick={() => generatePDF(data)}
@@ -292,6 +324,59 @@ export const AdminProduct = () => {
         </button>
       </div>
 
+      <div className="filter-container">
+  <label htmlFor="gender-filter" style={{color: "white"}}>Filter by Gender:</label>
+  <select
+    id="gender-filter"
+    value={filterGender}
+    onChange={handleFilterChange}
+    required
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+    }}
+  >
+    <option value="">-- Select Gender --</option>
+    <option value="mens">Men's</option>
+    <option value="women">Women's</option>
+  </select>
+</div>
+
+<div className="filter-container">
+  <label htmlFor="min-price" style={{color: "white"}}>Min Price:</label>
+  <input
+    type="number"
+    id="min-price"
+    placeholder="Min Price"
+    onChange={(e) => setMinPrice(e.target.value)}
+    value={minPrice}
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+      margin: '5px 10px', // Add margin around the input
+      border: '1px solid #ccc', // Add a border
+    }}
+  />
+</div>
+
+<div className="filter-container">
+  <label htmlFor="max-price" style={{color: "white"}}>Max Price:</label>
+  <input
+    type="number"
+    id="max-price"
+    placeholder="Max Price"
+    onChange={(e) => setMaxPrice(e.target.value)}
+    value={maxPrice}
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+      margin: '5px 10px', // Add margin around the input
+      border: '1px solid #ccc', // Add a border
+    }}
+  />
+</div>
+
+
       <div
         className="productList"
         style={{ display: "flex", flexWrap: "wrap", margin: "10px" }}
@@ -300,7 +385,7 @@ export const AdminProduct = () => {
           <p>Loading</p>
         ) : (
           <>
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <div className="card-container">
                 <a href="/">
                   <img

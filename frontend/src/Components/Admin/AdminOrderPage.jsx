@@ -96,7 +96,7 @@ export const AdminOrderPage = () => {
             <thead>
               <tr>
                 <th>User ID</th>
-                {/* <th>Product</th> */}
+                <th>Product</th>
                 <th>Total Price</th>
               </tr>
             </thead>
@@ -104,7 +104,12 @@ export const AdminOrderPage = () => {
               {data.map((item) => (
                 <tr key={item._id}>
                   <td>{item.userID}</td>
-                  {/* <td>{item.product}</td> */}
+                  {item.product.map((products) => 
+                  (
+                    <tr>
+                      <td> {products.productTile}</td>
+                    </tr>
+                  ))}
                   <td>{item.totalPrice}</td>
                 </tr>
               ))}

@@ -260,7 +260,7 @@ const Navbar = () => {
         <span style={{ margin: "0 5px", color: "white" }}>|</span>
         <label style={{ color: "white" }}>Women's Collection</label>
         <span style={{ margin: "0 5px", color: "white" }}>|</span>
-        <label style={{ color: "white" }}>Use Chatbot</label>
+        <label style={{ color: "white" }}>Use </label>
       </div>
 
       <Modal
