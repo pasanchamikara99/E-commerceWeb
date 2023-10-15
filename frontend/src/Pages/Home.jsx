@@ -71,10 +71,14 @@ export const Home = () => {
 
       <div className="sectionOne">
         <label htmlFor="">
-          <Link to="#">New Products</Link>
+          <Link to="#" style={{ textDecoration: "none" }}>
+            Men's
+          </Link>
         </label>
         <label htmlFor="">
-          <Link to="">New Products</Link>
+          <Link to="" style={{ textDecoration: "none" }}>
+            Women's
+          </Link>
         </label>
       </div>
 

@@ -39,6 +39,7 @@ export const FeedBack = () => {
         comment,
       }
     );
+    fetchData();
   };
 
   return (
@@ -60,29 +61,33 @@ export const FeedBack = () => {
           style={{ display: "flex", justifyContent: "space-between" }}
         >
           <div className="rating" style={{ width: "60%", padding: "5px" }}>
-            {feedbacks.map((feedback) => (
-              <ol
-                style={{
-                  listStyle: "none",
-                  padding: "10px",
-                  maxWidth: "500px",
-                }}
-              >
-                <li style={{ fontSize: "13px" }}>{feedback.userName}</li>
-                <li
+            {feedbacks == "" ? (
+              <p>No reviews yet</p>
+            ) : (
+              feedbacks.map((feedback) => (
+                <ol
                   style={{
+                    listStyle: "none",
+                    padding: "10px",
                     maxWidth: "500px",
-                    overflow: "hidden",
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    fontSize: "16px",
                   }}
                 >
-                  {feedback.comment}
-                </li>
-                <hr />
-              </ol>
-            ))}
+                  <li style={{ fontSize: "13px" }}>{feedback.userName}</li>
+                  <li
+                    style={{
+                      maxWidth: "500px",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      fontSize: "16px",
+                    }}
+                  >
+                    {feedback.comment}
+                  </li>
+                  <hr />
+                </ol>
+              ))
+            )}
           </div>
           <form
             action=""

@@ -30,7 +30,9 @@ export const ViewFeedBacks = () => {
         className="feedbacks"
         style={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: "column",
+          marginRight: "10px",
+          marginBottom: "10px",
         }}
       >
         {feedbacks.map((feedback, index) => (
