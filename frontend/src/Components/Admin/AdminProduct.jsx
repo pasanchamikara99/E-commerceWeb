@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import {
   FaPlus,
   FaWindowClose,
@@ -12,6 +15,7 @@ import Swal from "sweetalert2";
 import storage from "../../../firebase/firebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import "./adminStyles.css";
+import "./adminCards.css";
 
 export const AdminProduct = () => {
   const [title, setProductTitle] = useState("");
@@ -28,6 +32,11 @@ export const AdminProduct = () => {
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [filterGender, setFilterGender] = useState(""); // Step 1: Add filter state
+
+  const [minPrice, setMinPrice] = useState(""); // Minimum price filter
+  const [maxPrice, setMaxPrice] = useState(""); // Maximum price filter
 
   //Image upload file change handle
   function handleUploadChange(event) {
@@ -47,6 +56,21 @@ export const AdminProduct = () => {
     setIsOpen(false);
   }
   //End Add Modal----------------------------------------------------------------
+
+  // Add an event handler for gender filtering
+  const handleFilterChange = (e) => {
+    setFilterGender(e.target.value);
+  };
+
+    // Modify the rendering logic to filter products based on price range
+    const filteredData = data.filter((item) => {
+      if (!filterGender) return true; // Show all products if no gender filter is selected
+      return item.gender === filterGender;
+    }).filter((item) => {
+      if (!minPrice || !maxPrice) return true; // Show all products if no price range filters are set
+      const price = parseFloat(item.price);
+      return price >= minPrice && price <= maxPrice;
+    });
 
   //Edit Modal----------------------------------------------------------------
   const openEditModal = async (id) => {
@@ -85,7 +109,8 @@ export const AdminProduct = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      backgroundColor: "black",
+      backgroundColor: "rgb(21, 51, 90)",
+      borderRadius: "15px",
     },
   };
 
@@ -234,15 +259,123 @@ export const AdminProduct = () => {
     );
   };
 
+  function generatePDF(data) {
+    const doc = new jsPDF();
+
+    // Define the columns for your table
+    const columns = ["Title", "Price", "Quantity", "Gender"];
+
+    // Define the data for your table
+    const tableData = data.map((item) => [
+      item.title,
+      `Rs.${item.price}.00`,
+      item.quantity,
+      item.gender,
+    ]);
+
+    // Set the table headers and data
+    doc.autoTable({
+      head: [columns],
+      body: tableData,
+    });
+
+    // Save the PDF
+    doc.save("product_report.pdf");
+  }
+
   return (
     <div className="product">
-      <h2>Product Management</h2>
-      <button style={{}}>
-        <span style={{ marginRight: "8px" }} onClick={openModal}>
-          Add Product
-        </span>
-        <FaPlus />
-      </button>
+      <h2 style={{ textAlign: "center", marginBottom: "10px" }}>
+        Product Management
+      </h2>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <button
+          style={{
+            marginBottom: "10px",
+          }}
+        >
+          <span style={{ marginRight: "8px" }} onClick={openModal}>
+            Add Product
+          </span>
+          <FaPlus />
+        </button>
+        <button
+          style={{
+            backgroundColor: "#007BFF", // Background color
+            color: "#fff", // Text color
+            borderRadius: "5px", // Border radius
+            border: "none", // Remove border
+            cursor: "pointer", // Cursor on hover
+          }}
+        >
+          <span
+            style={{ marginRight: "8px" }}
+            onClick={() => generatePDF(data)}
+          >
+            Inventory Report
+          </span>
+          <FaPlus />
+        </button>
+      </div>
+
+      <div className="filter-container">
+  <label htmlFor="gender-filter" style={{color: "white"}}>Filter by Gender:</label>
+  <select
+    id="gender-filter"
+    value={filterGender}
+    onChange={handleFilterChange}
+    required
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+    }}
+  >
+    <option value="">-- Select Gender --</option>
+    <option value="mens">Men's</option>
+    <option value="women">Women's</option>
+  </select>
+</div>
+
+<div className="filter-container">
+  <label htmlFor="min-price" style={{color: "white"}}>Min Price:</label>
+  <input
+    type="number"
+    id="min-price"
+    placeholder="Min Price"
+    onChange={(e) => setMinPrice(e.target.value)}
+    value={minPrice}
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+      margin: '5px 10px', // Add margin around the input
+      border: '1px solid #ccc', // Add a border
+    }}
+  />
+</div>
+
+<div className="filter-container">
+  <label htmlFor="max-price" style={{color: "white"}}>Max Price:</label>
+  <input
+    type="number"
+    id="max-price"
+    placeholder="Max Price"
+    onChange={(e) => setMaxPrice(e.target.value)}
+    value={maxPrice}
+    style={{
+      marginLeft: '10px',
+      padding: '5px',
+      margin: '5px 10px', // Add margin around the input
+      border: '1px solid #ccc', // Add a border
+    }}
+  />
+</div>
+
 
       <div
         className="productList"
@@ -252,48 +385,59 @@ export const AdminProduct = () => {
           <p>Loading</p>
         ) : (
           <>
-            {data.map((item, index) => (
-              <div
-                key={index} // Make sure to use a unique key for each element
-                className="productCard"
-                style={{
-                  padding: "5px",
-                  margin: "10px",
-                  border: "1px solid black",
-                  minWidth: "300px",
-                  minHeight: "200px",
-                }}
-              >
-                <img
-                  src={item.imageLink}
-                  alt="Product Image"
-                  srcset=""
-                  style={{ width: "300px", height: "300px" }}
-                />
-                <h1>{item.title}</h1>
-                <center>
-                  <label>Price : Rs.{item.price}.00</label>
-                  <p>Quantity :{item.quantity}</p>
-                  <h5>Type :{item.gender}</h5>
-                </center>
-
-                <div
-                  className="buttons"
-                  style={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <button
-                    style={{ backgroundColor: "blue" }}
-                    onClick={() => openEditModal(item._id)}
-                  >
-                    <FaEdit style={{ fontSize: "20px" }} />
-                  </button>
-                  <button
-                    style={{ backgroundColor: "red" }}
-                    onClick={() => deleteProduct(item._id)}
-                  >
-                    <FaTrash style={{ fontSize: "20px" }} />
-                  </button>
+            {filteredData.map((item, index) => (
+              <div className="card-container">
+                <a href="/">
+                  <img
+                    className="hero-image"
+                    src={item.imageLink}
+                    alt="Spinning glass cube"
+                  />
+                </a>
+                <main className="main-content">
+                  <h1>
+                    <a href="#">{item.title}</a>
+                  </h1>
+                  <p>Our Equilibrium collection promotes balance and calm.</p>
+                  <div className="flex-row">
+                    <div className="coin-base">
+                      <img
+                        src="https://i.postimg.cc/T1F1K0bW/Ethereum.png"
+                        alt="Ethereum"
+                        className="small-image"
+                      />
+                      <h2>Price : Rs.{item.price}.00</h2>
+                    </div>
+                    <div className="time-left">
+                      <img
+                        src="https://i.postimg.cc/prpyV4mH/clock-selection-no-bg.png"
+                        alt="clock"
+                        className="small-image"
+                      />
+                      <p>Quantity : {item.quantity}</p>
+                    </div>
+                  </div>
+                </main>
+                <div className="card-attribute">
+                  <img
+                    src="https://i.postimg.cc/SQBzNQf1/image-avatar.png"
+                    alt="avatar"
+                    className="small-avatar"
+                  />
+                  <p>Gender : {item.gender}</p>
                 </div>
+                <button
+                  style={{ backgroundColor: "blue" }}
+                  onClick={() => openEditModal(item._id)}
+                >
+                  <FaEdit style={{ fontSize: "20px" }} />
+                </button>
+                <button
+                  style={{ backgroundColor: "red", marginTop: "20px" }}
+                  onClick={() => deleteProduct(item._id)}
+                >
+                  <FaTrash style={{ fontSize: "20px" }} />
+                </button>
               </div>
             ))}
           </>
@@ -364,7 +508,11 @@ export const AdminProduct = () => {
               <button type="button" onClick={handleUpload}>
                 Upload
               </button>
-              <p>{percent} "% done"</p>
+              <div className="progress-bar-container">
+                <div className="progress-bar" style={{ width: `${percent}%` }}>
+                  {percent}% done
+                </div>
+              </div>
             </label>
             <br />
             <select value={gender} onChange={handleChange} required>

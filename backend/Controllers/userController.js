@@ -50,4 +50,14 @@ const GetAllUsers = (req, res) => {
     });
 };
 
-module.exports = { loginUser, signupUser, EditAddress, GetAllUsers };
+const allUsers = (req, res) => {
+  User.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+module.exports = { loginUser, signupUser, allUsers, EditAddress, GetAllUsers };

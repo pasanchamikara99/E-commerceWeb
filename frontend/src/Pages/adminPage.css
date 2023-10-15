@@ -1,0 +1,71 @@
+:root {
+    
+    font-size: 15px;
+    
+    /* Primary */
+    --var-soft-blue: hsl(215, 51%, 70%);
+    --var-cyan: hsl(178, 100%, 50%);
+    /* Neutral */
+    --var-main-darkest: hsl(217, 54%, 11%);
+    --var-card-dark: hsl(216, 50%, 16%);
+    --var-line-dark: hsl(215, 32%, 27%);
+    --var-lightest: white;
+    
+    /* Fonts */
+    
+    --var-heading: normal normal 600 1.5em/1.6em 'Outfit', sans-serif;
+    
+    --var-small-heading: normal normal 400 1em/1em 'Outfit', sans-serif;
+    
+    --var-para: normal normal 300 1em/1.55em 'Outfit', sans-serif;
+}
+
+.adminDashboard {
+    background-color: var(--var-main-darkest);
+}
+
+.card-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 2em auto;
+    background-color: var(--var-card-dark);
+    border-radius: 15px;
+    margin-bottom: 1rem;
+    padding: 2rem;
+}
+
+.profilecontainer .profile {
+    background-color: var(--var-card-dark);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .profilecontainer {
+    border-radius: 15px;
+  }
+  
+  .profile button {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid white;
+    min-width: 250px;
+    color: white;
+    text-align: center;
+  }
+  
+  .profile ul {
+    list-style: none;
+    margin-right: 30px;
+  }
+  
+  .profile button:hover {
+    background-color: white;
+    color: black;
+  }
+  

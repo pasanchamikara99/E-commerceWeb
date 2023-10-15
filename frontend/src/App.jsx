@@ -9,6 +9,7 @@ import { SingleProduct } from "./Pages/SingleProduct";
 import { Profile } from "./Pages/Profile";
 import { AdminPage } from "./Pages/AdminPage";
 import { Footer } from "./Components/Footer";
+import {FooterNew } from "./Components/FooterNew";
 import { Checkout } from "./Pages/Checkout";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
-      {/* <Footer /> */}
+      {/* <FooterNew /> */}
     </LoginModal.Provider>
   );
 }
