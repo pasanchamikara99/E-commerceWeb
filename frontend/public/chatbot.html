@@ -1,272 +1,277 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Trendy Chatbot</title>
-    <link rel="stylesheet" href="chatbot.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <h1>Trendy Fashion</h1>
-    <br><br>
-    <h2>Here you can get best dress suggestions for your happiest occasion</h2>
-    <br><br>
-    <h3> Happy Shopping !!! </h3>
-    <button class="chatbot-toggler">
-      <span class="material-symbols-rounded">person_raised_hand</span>
-      <span class="material-symbols-outlined">close</span>
-    </button>
-    <div class="chatbot">
-      <header>
-        <h2>💃 Trendy 🕺</h2>
-        <span class="close-btn material-symbols-outlined">close</span>
-      </header>
-      <ul class="chatbox">
-        <li class="chat incoming">
-          <span class="material-symbols-outlined">person_raised_hand</span>
-          <p>Welcome to Trendy 👋 <br>🕺💃<br>How can I help you today?</p>
-        </li>
-      </ul>
-      <div class="chat-input">
-        <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-        <span id="send-btn" class="material-symbols-rounded">send</span>
-      </div>
+
+<head>
+  <meta charset="utf-8">
+  <title>Trendy Chatbot</title>
+  <link rel="stylesheet" href="chatbot.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts Link For Icons -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <h1>Trendy Fashion</h1>
+  <br><br>
+  <h2>Here you can get best dress suggestions for your happiest occasion</h2>
+  <br><br>
+  <h3> Happy Shopping !!! </h3>
+  <button class="chatbot-toggler">
+    <span class="material-symbols-rounded">person_raised_hand</span>
+    <span class="material-symbols-outlined">close</span>
+  </button>
+  <div class="chatbot">
+    <header>
+      <h2>💃 Trendy 🕺</h2>
+      <span class="close-btn material-symbols-outlined">close</span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="material-symbols-outlined">person_raised_hand</span>
+        <p>Welcome to Trendy 👋 <br>🕺💃<br>How can I help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
     </div>
+  </div>
 
-<script>
-const chatbotToggler = document.querySelector(".chatbot-toggler");
-const closeBtn = document.querySelector(".close-btn");
-const chatbox = document.querySelector(".chatbox");
-const chatInput = document.querySelector(".chat-input textarea");
-const sendChatBtn = document.querySelector(".chat-input span");
-const conversationHistory = [];
+  <script>
+    const chatbotToggler = document.querySelector(".chatbot-toggler");
+    const closeBtn = document.querySelector(".close-btn");
+    const chatbox = document.querySelector(".chatbox");
+    const chatInput = document.querySelector(".chat-input textarea");
+    const sendChatBtn = document.querySelector(".chat-input span");
+    const conversationHistory = [];
 
 
-let userMessage = null; // Variable to store user's message
-const API_KEY = "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"; // Paste your API key here
-const inputInitHeight = chatInput.scrollHeight;
+    let userMessage = null; // Variable to store user's message
+    const API_KEY = "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"; // Paste your API key here
+    const inputInitHeight = chatInput.scrollHeight;
 
-const createChatLi = (message, className) => {
-    // Create a chat <li> element with passed message and className
-    const chatLi = document.createElement("li");
-    chatLi.classList.add("chat", `${className}`);
-    let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">person_raised_hand</span><p></p>`;
-    chatLi.innerHTML = chatContent;
-    chatLi.querySelector("p").textContent = message;
-    return chatLi; // return chat <li> element
-}
+    const createChatLi = (message, className) => {
+      // Create a chat <li> element with passed message and className
+      const chatLi = document.createElement("li");
+      chatLi.classList.add("chat", `${className}`);
+      let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">person_raised_hand</span><p></p>`;
+      chatLi.innerHTML = chatContent;
+      chatLi.querySelector("p").textContent = message;
+      return chatLi; // return chat <li> element
+    }
 
-const generateResponse = (chatElement, conversationHistory) => {
-  const messageElement = chatElement.querySelector("p");
+    const generateResponse = (chatElement, conversationHistory) => {
+      const messageElement = chatElement.querySelector("p");
 
-  // Check if the user's message contains specific keywords and append the links with thumbnails
-  if (userMessage.includes("yellow shirt")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://tshirtrepublic.lk/product/neon-yellow-steel-grey-sports-t-shirt/",
-      "Check here !! We got what you want !! 💃🕺",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
-  if (userMessage.includes("blue blouse")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://tshirtrepublic.lk/product/royal-blue-navy-blue-sports-t-shirt/",
-      "Check here !! We got what you want !! 💃🕺",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
-  if (userMessage.includes("red skirt")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://tshirtrepublic.lk/product/electric-red-navy-blue-sports-t-shirt/",
-      "Check here !! We got what you want !! 💃🕺",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
-  if (userMessage.includes("yes")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://tshirtrepublic.lk/",
-      "WONDERFUL !! Check here for tons of Designs !! 💃🕺",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
-  if (userMessage.includes("cart")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://www.google.com",
-      "Click here to check your cart",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
-  if (userMessage.includes("checkout")) {
-    displayLinkWithThumbnail(
-      messageElement,
-      "https://www.facebook.com",
-      "Click here to go to the checkout page",
-      "logo.png" // Add the image source URL for the thumbnail
-    );
-  }
+      // Check if the user's message contains specific keywords and append the links with thumbnails
+      if (userMessage.includes("yellow shirt")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://tshirtrepublic.lk/product/neon-yellow-steel-grey-sports-t-shirt/",
+          "Check here !! We got what you want !! 💃🕺",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
+      if (userMessage.includes("blue blouse")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://tshirtrepublic.lk/product/royal-blue-navy-blue-sports-t-shirt/",
+          "Check here !! We got what you want !! 💃🕺",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
+      if (userMessage.includes("red skirt")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://tshirtrepublic.lk/product/electric-red-navy-blue-sports-t-shirt/",
+          "Check here !! We got what you want !! 💃🕺",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
+      if (userMessage.includes("yes")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://tshirtrepublic.lk/",
+          "WONDERFUL !! Check here for tons of Designs !! 💃🕺",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
+      if (userMessage.includes("cart")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://www.google.com",
+          "Click here to check your cart",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
+      if (userMessage.includes("checkout")) {
+        displayLinkWithThumbnail(
+          messageElement,
+          "https://www.facebook.com",
+          "Click here to go to the checkout page",
+          "logo.png" // Add the image source URL for the thumbnail
+        );
+      }
 
-  if (userMessage.includes("thank")) {
-    messageElement.textContent = "You are always Welcome !! Trendy Fashions! 💃🕺";
-  }
-  if (userMessage.includes("who are you")) {
-    messageElement.textContent = "Hii... I'm Trendy 🙇‍♀ ! I'm here to help you to all you fashion needs !  ";
-  }
+      if (userMessage.includes("thank")) {
+        messageElement.textContent = "You are always Welcome !! Trendy Fashions! 💃🕺";
+      }
+      if (userMessage.includes("who are you")) {
+        messageElement.textContent = "Hii... I'm Trendy 🙇‍♀ ! I'm here to help you to all you fashion needs !  ";
+      }
 
-  // If none of the keywords or specific messages are found, you can use your existing code to make an API request
-  if (!["yellow shirt", "blue shirt", "red shirt", "yes","thank","who are you"].some(keyword => userMessage.includes(keyword))) {
-    const API_URL = "https://api.openai.com/v1/chat/completions";
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_KEY}`
-      },
-      body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: conversationHistory,
-      })
+      // If none of the keywords or specific messages are found, you can use your existing code to make an API request
+      if (!["yellow shirt", "blue shirt", "red shirt", "yes", "thank", "who are you"].some(keyword => userMessage.includes(keyword))) {
+        const API_URL = "https://api.openai.com/v1/chat/completions";
+        const requestOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: conversationHistory,
+          })
+        };
+
+        // Send POST request to API, get response, and set the response as paragraph text
+        fetch(API_URL, requestOptions)
+          .then(res => res.json())
+          .then(data => {
+            // Limit the response to a maximum of 20 words
+            const responseText = data.choices[0].message.content.trim();
+            const words = responseText.split(" ");
+            if (words.length > 100) {
+              messageElement.textContent = words.slice(0, 100).join(" ") + " ...";
+            } else {
+              messageElement.textContent = responseText;
+            }
+          })
+          .catch(() => {
+            messageElement.classList.add("error");
+            messageElement.textContent = "Oops! Something went wrong. Please try again.";
+          })
+          .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+      }
     };
 
-    // Send POST request to API, get response, and set the response as paragraph text
-    fetch(API_URL, requestOptions)
-      .then(res => res.json())
-      .then(data => {
-        // Limit the response to a maximum of 20 words
-        const responseText = data.choices[0].message.content.trim();
-        const words = responseText.split(" ");
-        if (words.length > 100) {
-          messageElement.textContent = words.slice(0, 100).join(" ") + " ...";
-        } else {
-          messageElement.textContent = responseText;
-        }
-      })
-      .catch(() => {
-        messageElement.classList.add("error");
-        messageElement.textContent = "Oops! Something went wrong. Please try again.";
-      })
-      .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-  }
-};
+    // Function to display a link with a thumbnail image
+    // Function to display a link with a smaller thumbnail image and separate lines
+    const displayLinkWithThumbnail = (messageElement, link, message, thumbnailSrc) => {
+      const linkContainer = document.createElement("div");
 
-// Function to display a link with a thumbnail image
-// Function to display a link with a smaller thumbnail image and separate lines
-const displayLinkWithThumbnail = (messageElement, link, message, thumbnailSrc) => {
-  const linkContainer = document.createElement("div");
+      // Create the link element
+      const linkElement = document.createElement("a");
+      linkElement.href = link;
+      linkElement.textContent = message;
+      linkElement.target = "_blank"; // Open the link in a new tab
+      linkElement.rel = "noopener noreferrer"; // Security best practice for opening links in new tabs
 
-  // Create the link element
-  const linkElement = document.createElement("a");
-  linkElement.href = link;
-  linkElement.textContent = message;
-  linkElement.target = "_blank"; // Open the link in a new tab
-  linkElement.rel = "noopener noreferrer"; // Security best practice for opening links in new tabs
+      // Append the link to the link container
+      linkContainer.appendChild(linkElement);
 
-  // Append the link to the link container
-  linkContainer.appendChild(linkElement);
+      // Add a line break (separate line) before the thumbnail
+      const lineBreak = document.createElement("br");
+      linkContainer.appendChild(lineBreak);
 
-  // Add a line break (separate line) before the thumbnail
-  const lineBreak = document.createElement("br");
-  linkContainer.appendChild(lineBreak);
+      // Create the thumbnail image element
+      const thumbnailElement = document.createElement("img");
+      thumbnailElement.src = thumbnailSrc;
+      thumbnailElement.alt = "Thumbnail";
+      thumbnailElement.classList.add("thumbnail"); // Add a class for styling
 
-  // Create the thumbnail image element
-  const thumbnailElement = document.createElement("img");
-  thumbnailElement.src = thumbnailSrc;
-  thumbnailElement.alt = "Thumbnail";
-  thumbnailElement.classList.add("thumbnail"); // Add a class for styling
+      // Apply CSS styling to the thumbnail for a smaller size
+      thumbnailElement.style.width = "70px"; // Set the desired width
+      thumbnailElement.style.height = "70px"; // Set the desired height
 
-  // Apply CSS styling to the thumbnail for a smaller size
-  thumbnailElement.style.width = "70px"; // Set the desired width
-  thumbnailElement.style.height = "70px"; // Set the desired height
+      // Append the thumbnail to the link container
+      linkContainer.appendChild(thumbnailElement);
 
-  // Append the thumbnail to the link container
-  linkContainer.appendChild(thumbnailElement);
+      // Append the link container to the message element
+      messageElement.innerHTML = ""; // Clear the previous message
+      messageElement.appendChild(linkContainer);
+    };
 
-  // Append the link container to the message element
-  messageElement.innerHTML = ""; // Clear the previous message
-  messageElement.appendChild(linkContainer);
-};
+    // Function to display a link with a message
+    const displayLink = (messageElement, link, message) => {
+      const linkElement = document.createElement("a");
+      linkElement.href = link;
+      linkElement.textContent = message;
+      linkElement.target = "_blank"; // Open the link in a new tab
+      linkElement.rel = "noopener noreferrer"; // Security best practice for opening links in new tabs
 
-// Function to display a link with a message
-const displayLink = (messageElement, link, message) => {
-  const linkElement = document.createElement("a");
-  linkElement.href = link;
-  linkElement.textContent = message;
-  linkElement.target = "_blank"; // Open the link in a new tab
-  linkElement.rel = "noopener noreferrer"; // Security best practice for opening links in new tabs
+      // Update the message element with the link
+      messageElement.innerHTML = ""; // Clear the previous message
+      messageElement.appendChild(linkElement);
+    };
 
-  // Update the message element with the link
-  messageElement.innerHTML = ""; // Clear the previous message
-  messageElement.appendChild(linkElement);
-};
+    const handleChat = () => {
+      userMessage = chatInput.value.trim().toLowerCase(); // Get user-entered message and convert to lowercase
+      if (!userMessage) return;
+      // Keywords to check against the user's message
+      const keywords = ["hi", "hello", "ok", "yellow", "green", "pink", "red", "purple", "frock", "jean", "skirt",
+        "crop top", "blouse", "good", "okay", "order", "buy", "formal", "checkout", "cart", "casual", "attire", "dress", "outfit", "buy", "add", "style", "price", "nice", "sleeve", "tie", "pant", "cost", "item", "small", "medium", "large", "see", "large", "small", "yeah", "of course", "suggest", "men", "woman", "girl", "boy", "gent", "lady", "class", "casual", "brand", "normal", "age", "prefer", "red", "blue", "pink", "white", "beige", "male", "female", "fit", "size", "color", "give", "sleeve", "how are you", "function", "dress", "who are you", "skirt", "t shirt", "yes", "shirt", "thank", "frock", "cap", "shoes", "kit", "fashion", "trendy", "hii", "wedding", "party", "casual", "help", "coat", "jacket", "one", "color", "black", "much"];
 
-const handleChat = () => {
-  userMessage = chatInput.value.trim().toLowerCase(); // Get user-entered message and convert to lowercase
-  if (!userMessage) return;
-  // Keywords to check against the user's message
-  const keywords = ["hi", "hello","ok","yellow","green","pink","red","purple","frock","jean","skirt",
-  "crop top","blouse","good","okay", "order", "buy","formal","checkout","cart","casual","attire","dress","outfit","buy","add","style", "price","nice","sleeve","tie","pant","cost","item","small","medium","large", "see","large","small","yeah","of course","suggest","men","woman","girl","boy","gent","lady","class","casual","brand","normal","age","prefer","red","blue","pink","white","beige","male","female","fit", "size", "color", "give", "sleeve", "how are you", "function", "dress", "who are you", "skirt", "t shirt", "yes", "shirt", "thank", "frock", "cap", "shoes", "kit", "fashion", "trendy", "hii", "wedding", "party", "casual", "help", "coat", "jacket", "one", "color", "black", "much"];
+      // Check if the user's message contains any of the keywords
+      const containsKeyword = keywords.some(keyword => userMessage.includes(keyword));
 
-  // Check if the user's message contains any of the keywords
-  const containsKeyword = keywords.some(keyword => userMessage.includes(keyword));
+      // Clear the input textarea and set its height to default
+      chatInput.value = "";
+      chatInput.style.height = `${inputInitHeight}px`;
 
-  // Clear the input textarea and set its height to default
-  chatInput.value = "";
-  chatInput.style.height = `${inputInitHeight}px`;
-
-  // Append the user's original message to the chatbox
-  chatbox.appendChild(createChatLi(userMessage, "outgoing"));
-  chatbox.scrollTo(0, chatbox.scrollHeight);
-
-  if (conversationHistory.length === 0) {
-    // If it's the first message, add the initial instruction to the user's message without displaying it in the chatbox
-    userMessage += " When answering from this onwards, Always imagine that you are a chatbot of a fashion House. Give answers as thinking you are the Support Bot of online fashion shop 'Trendy'. We have Gents' Shirts, T shirts, Trousers, Shorts and Ladies frocks, skirts, blouses, trousers. All of them are Made in Sri Lankan Clothing Partners and available only in Large, Medium and small sizes. Always try to stay in a conversation only related to our fashion shop and must take the user back to the chat if user gets out of context. Always use 'LKR' as the currency when dealing with prices. For shirts price range is 2500-5000, T shirts 2000-5000,Trousers 5000-8000,Shorts 1500 - 3000, frocks 5000-8000, skirts 2500 - 6000, caps 700 - 2000, shoes 5000 - 12000. When giving prices Give random prices which are divided by 150. You need to assist for selecting clothes, and fashion items. Don't repeat about yourself when giving answers. Just focus on the question and give the related answer. when user askes for a dress or suggestion for a dress always first ask user about his gender and then age and then size. For male or men or gents or boy we have shirts, shorts, trousers and T shirts, branded T shirts. For female or lady or woman or girl we have frocks, skirts, blouses and trousers. When user is searching for dress after giving size, gender and color you should provide a single item and convince user to buy it.  Imagine I'm a customer for your shop and give the best and shortest answer you can.";
-  }
-
-  conversationHistory.push({ role: "user", content: userMessage });
-
-  if (!containsKeyword) {
-    // If the user's message does not contain any keyword, display the special response
-    setTimeout(() => {
-      const responseMessage = "Mmmm I don't have an idea about it 😢☹. By the way, Would you like to check our latest collection 💃🕺?";
-      const incomingChatLi = createChatLi(responseMessage, "incoming");
-      chatbox.appendChild(incomingChatLi);
+      // Append the user's original message to the chatbox
+      chatbox.appendChild(createChatLi(userMessage, "outgoing"));
       chatbox.scrollTo(0, chatbox.scrollHeight);
-    }, 600);
-  } else {
-    // If the user's message contains a keyword, generate a response based on the keyword
-    setTimeout(() => {
-      // Display "Thinking..." message while waiting for the response
-      const incomingChatLi = createChatLi("Thinking...", "incoming");
-      chatbox.appendChild(incomingChatLi);
-      chatbox.scrollTo(0, chatbox.scrollHeight);
-      generateResponse(incomingChatLi, conversationHistory); // Pass modified messageToSend to generateResponse function
-    }, 600);
-  }
-}
 
-chatInput.addEventListener("input", () => {
-    chatInput.style.height = `${inputInitHeight}px`;
-    chatInput.style.height = `${chatInput.scrollHeight}px`;
-});
+      if (conversationHistory.length === 0) {
+        // If it's the first message, add the initial instruction to the user's message without displaying it in the chatbox
+        userMessage += " When answering from this onwards, Always imagine that you are a chatbot of a fashion House. Give answers as thinking you are the Support Bot of online fashion shop 'Trendy'. We have Gents' Shirts, T shirts, Trousers, Shorts and Ladies frocks, skirts, blouses, trousers. All of them are Made in Sri Lankan Clothing Partners and available only in Large, Medium and small sizes. Always try to stay in a conversation only related to our fashion shop and must take the user back to the chat if user gets out of context. Always use 'LKR' as the currency when dealing with prices. For shirts price range is 2500-5000, T shirts 2000-5000,Trousers 5000-8000,Shorts 1500 - 3000, frocks 5000-8000, skirts 2500 - 6000, caps 700 - 2000, shoes 5000 - 12000. When giving prices Give random prices which are divided by 150. You need to assist for selecting clothes, and fashion items. Don't repeat about yourself when giving answers. Just focus on the question and give the related answer. when user askes for a dress or suggestion for a dress always first ask user about his gender and then age and then size. For male or men or gents or boy we have shirts, shorts, trousers and T shirts, branded T shirts. For female or lady or woman or girl we have frocks, skirts, blouses and trousers. When user is searching for dress after giving size, gender and color you should provide a single item and convince user to buy it.  Imagine I'm a customer for your shop and give the best and shortest answer you can.";
+      }
 
-chatInput.addEventListener("keydown", (e) => {
-    if(e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+      conversationHistory.push({ role: "user", content: userMessage });
+
+      if (!containsKeyword) {
+        // If the user's message does not contain any keyword, display the special response
+        setTimeout(() => {
+          const responseMessage = "Mmmm I don't have an idea about it 😢☹. By the way, Would you like to check our latest collection 💃🕺?";
+          const incomingChatLi = createChatLi(responseMessage, "incoming");
+          chatbox.appendChild(incomingChatLi);
+          chatbox.scrollTo(0, chatbox.scrollHeight);
+        }, 600);
+      } else {
+        // If the user's message contains a keyword, generate a response based on the keyword
+        setTimeout(() => {
+          // Display "Thinking..." message while waiting for the response
+          const incomingChatLi = createChatLi("Thinking...", "incoming");
+          chatbox.appendChild(incomingChatLi);
+          chatbox.scrollTo(0, chatbox.scrollHeight);
+          generateResponse(incomingChatLi, conversationHistory); // Pass modified messageToSend to generateResponse function
+        }, 600);
+      }
+    }
+
+    chatInput.addEventListener("input", () => {
+      chatInput.style.height = `${inputInitHeight}px`;
+      chatInput.style.height = `${chatInput.scrollHeight}px`;
+    });
+
+    chatInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
         e.preventDefault();
         handleChat();
-    }
-});
+      }
+    });
 
-sendChatBtn.addEventListener("click", handleChat);
-closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
-chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
+    sendChatBtn.addEventListener("click", handleChat);
+    closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+    chatbotToggler.addEventListener("click", () => document.body.classList.toggle("show-chatbot"));
   </script>
 
-  </body>
+</body>
+
 </html>

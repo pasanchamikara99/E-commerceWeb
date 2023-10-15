@@ -75,6 +75,20 @@ const Navbar = () => {
       zIndex: 9999,
     },
   };
+  function openChatbotWindow() {
+    // Adjust the dimensions as needed
+    const width = 500;
+    const height = 1000;
+    const left = (window.innerWidth - width) / 2;
+    const top = (window.innerHeight - height) / 2;
+
+    // Open the chatbot.html file in a separate window
+    window.open(
+      "chatbot.html",
+      "Chatbot Window",
+      `width=${width}, height=${height}, left=${left}, top=${top}`
+    );
+  }
 
   useEffect(() => {
     fetchData();
@@ -260,7 +274,13 @@ const Navbar = () => {
         <span style={{ margin: "0 5px", color: "white" }}>|</span>
         <label style={{ color: "white" }}>Women's Collection</label>
         <span style={{ margin: "0 5px", color: "white" }}>|</span>
-        <label style={{ color: "white" }}>Use </label>
+        <label
+          id="use"
+          style={{ color: "white", cursor: "pointer" }}
+          onClick={openChatbotWindow}
+        >
+          Use         
+        </label>
       </div>
 
       <Modal
