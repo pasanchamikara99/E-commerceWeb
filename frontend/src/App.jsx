@@ -9,6 +9,7 @@ import { SingleProduct } from "./Pages/SingleProduct";
 import { Profile } from "./Pages/Profile";
 import { AdminPage } from "./Pages/AdminPage";
 import { Footer } from "./Components/Footer";
+import {FooterNew } from "./Components/FooterNew";
 import { Checkout } from "./Pages/Checkout";
 import { AllProduct } from "./Pages/AllProduct";
 

@@ -3,9 +3,17 @@ import Navbar from "../Components/Navbar";
 import "../Pages/SingleProduct.css";
 import { AdminUserPage } from "../Components/Admin/AdminUserPage";
 import { AdminProduct } from "../Components/Admin/AdminProduct";
+import { AdminOrderPage } from "../Components/Admin/AdminOrderPage";
+import "./adminPage.css";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+import propic from "../assets/Images/propic.png";
 
 export const AdminPage = () => {
   const [page, setPage] = useState(1);
+
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -13,8 +21,25 @@ export const AdminPage = () => {
     setPage(index);
   };
 
+  const logOut = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Want to Sign Out?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Logout!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("user");
+        navigate("/");
+      }
+    });
+  };
+
   return (
-    <div>
+    <div className="adminDashboard">
       <Navbar />
 
       <div
@@ -23,7 +48,11 @@ export const AdminPage = () => {
       >
         <div className="profile">
           <center>
-            <img src=".alie" alt="image" />
+            <img
+              src={propic}
+              alt="image"
+              style={{ maxWidth: "100px", maxHeight: "100px" }}
+            />
             <br />
             <label style={{ fontSize: "20px" }}>
               {user.user.firstname}
@@ -47,7 +76,7 @@ export const AdminPage = () => {
             </li>
 
             <li>
-              <button onClick={() => logout()}>Log Out</button>
+              <button onClick={() => logOut()}>Log Out</button>
             </li>
           </ul>
         </div>
@@ -59,7 +88,7 @@ export const AdminPage = () => {
           {page === 1 ? (
             <AdminUserPage />
           ) : page === 2 ? (
-            <AdminUserPage />
+            <AdminOrderPage />
           ) : (
             <AdminProduct />
           )}
