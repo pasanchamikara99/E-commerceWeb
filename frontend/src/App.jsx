@@ -10,6 +10,7 @@ import { Profile } from "./Pages/Profile";
 import { AdminPage } from "./Pages/AdminPage";
 import { Footer } from "./Components/Footer";
 import { Checkout } from "./Pages/Checkout";
+import { AllProduct } from "./Pages/AllProduct";
 
 function App() {
   const [clickLogin, setClickLogin] = useState(false);
@@ -24,10 +25,11 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/Admin" element={<AdminPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/AllProduct" element={<AllProduct />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </BrowserRouter>
-      {/* <Footer /> */}
+      <Footer />
     </LoginModal.Provider>
   );
 }

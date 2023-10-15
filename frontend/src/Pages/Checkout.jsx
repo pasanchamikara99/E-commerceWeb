@@ -243,22 +243,36 @@ export const Checkout = () => {
                         textAlign: "center",
                         fontSize: "15px",
                         border: "none",
+                        marginTop: "2px",
                         marginRight: "15px",
                       }}
                       placeholder="CVC"
                       required
                     />
-                    <input
-                      type="date"
-                      style={{
-                        padding: "6px",
-                        textAlign: "center",
-                        fontSize: "15px",
-                        border: "none",
-                        margin: "2px",
-                      }}
-                      required
-                    />
+                    <select
+                      name=""
+                      id=""
+                      style={{ padding: "6px", border: "none", margin: "2px" }}
+                    >
+                      Month
+                      <option value="">month</option>
+                      <option value="">1</option>
+                      <option value="">2</option>
+                      <option value="">3</option>
+                      <option value="">4</option>
+                    </select>
+                    <select
+                      name=""
+                      id=""
+                      style={{ padding: "6px", border: "none" }}
+                    >
+                      Year
+                      <option value="">year</option>
+                      <option value="">2019</option>
+                      <option value="">2021</option>
+                      <option value="">2022</option>
+                      <option value="">2023</option>
+                    </select>
                   </>
                 )}
               </div>

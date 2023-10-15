@@ -2,45 +2,44 @@ import React from "react";
 import "react-slideshow-image/dist/styles.css";
 import { Fade, Zoom, Slide } from "react-slideshow-image";
 
-import imageOne from "../assets/Images/one.jpg";
-import imageTwo from "../assets/Images/two.jpg";
-import imageThree from "../assets/Images/three.jpg";
+import slider from "../assets/Images/slider.jpg";
 import exchange from "../assets/Images/exchange.png";
 import delivery from "../assets/Images/Delivery.png";
+import smile from "../assets/Images/Smile.png";
 
 import "../Components/SliderImage.css";
 
 export const SliderImage = () => {
-  const itemsArray = [
-    {
-      imageSrc: imageOne,
-      heading: "Discover the Latest Trends",
-      style: {
-        backgroundColor: "lightblue",
-        color: "black",
-        padding: "10px",
-      },
-    },
-    {
-      imageSrc: imageTwo,
-      heading: "Item 2",
-      style: {
-        backgroundColor: "lightgreen",
-        color: "black",
+  // const itemsArray = [
+  //   {
+  //     imageSrc: imageOne,
+  //     heading: "Discover the Latest Trends",
+  //     style: {
+  //       backgroundColor: "lightblue",
+  //       color: "black",
+  //       padding: "10px",
+  //     },
+  //   },
+  //   {
+  //     imageSrc: imageTwo,
+  //     heading: "Item 2",
+  //     style: {
+  //       backgroundColor: "lightgreen",
+  //       color: "black",
 
-        padding: "10px",
-      },
-    },
-    {
-      imageSrc: imageThree,
-      heading: "Item 3",
-      style: {
-        backgroundColor: "lightcoral",
-        color: "white",
-        padding: "10px",
-      },
-    },
-  ];
+  //       padding: "10px",
+  //     },
+  //   },
+  //   {
+  //     imageSrc: imageThree,
+  //     heading: "Item 3",
+  //     style: {
+  //       backgroundColor: "lightcoral",
+  //       color: "white",
+  //       padding: "10px",
+  //     },
+  //   },
+  // ];
 
   return (
     <>
@@ -86,12 +85,18 @@ export const SliderImage = () => {
         </Fade>
       </div> */}
 
-      <img src={imageOne} alt="" width="100%" height={"500px"} />
+      <img
+        src={slider}
+        alt=""
+        width="100%"
+        height={"600px"}
+        style={{ objectFit: "cover" }}
+      />
       <br />
       <div
         className="details-container"
         style={{
-          backgroundColor: "gray",
+          backgroundColor: "#e0dcdc",
           display: "flex",
           justifyContent: "space-between",
 
@@ -122,7 +127,7 @@ export const SliderImage = () => {
         </div>
         <div className="left">
           {" "}
-          <img src="../assets/Images/Delivery.png" alt="delivery" />
+          <img src={smile} alt="delivery" />
           <label htmlFor="" style={{ fontWeight: "bold" }}>
             Guarantee of Comfort and Quality
           </label>

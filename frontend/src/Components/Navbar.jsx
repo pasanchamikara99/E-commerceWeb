@@ -97,7 +97,7 @@ const Navbar = () => {
       console.error("Error fetching data:", error);
     }
 
-    //fetchData();
+    fetchData();
   };
 
   const [quantity, setquantity] = useState([]);
@@ -154,7 +154,7 @@ const Navbar = () => {
         <div className="left" style={{ width: "15%" }}>
           <b>
             <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-              CoolPlanet.com
+              Trendy.com
             </Link>
             {user && user.user.userType == "admin" ? <b>Admin</b> : <></>}{" "}
           </b>
@@ -255,8 +255,15 @@ const Navbar = () => {
         }}
       >
         <label htmlFor="" style={{ color: "white" }}>
-          Men's Collection
+          <Link
+            to="/AllProduct"
+            style={{ color: "white", textDecoration: "none" }}
+          >
+            All Products
+          </Link>
         </label>
+        <span style={{ margin: "0 5px", color: "white" }}>|</span>
+        <label style={{ color: "white" }}>Men's Collection</label>
         <span style={{ margin: "0 5px", color: "white" }}>|</span>
         <label style={{ color: "white" }}>Women's Collection</label>
         <span style={{ margin: "0 5px", color: "white" }}>|</span>

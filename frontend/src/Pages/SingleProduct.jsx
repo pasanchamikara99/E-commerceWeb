@@ -104,7 +104,7 @@ export const SingleProduct = () => {
           <img
             src={data.imageLink}
             alt="Image"
-            style={{ maxWidth: "400px", height: "600px" }}
+            style={{ maxWidth: "400px", height: "600px", objectFit: "cover" }}
           />
         </div>
 
