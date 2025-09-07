@@ -28,7 +28,7 @@
         "react-modal": "^3.16.1",
         "react-router-dom": "^6.16.0",
         "react-slideshow-image": "^4.2.1",
-        "sweetalert2": "^11.7.32"
+        "sweetalert2": "^11.22.4"
     },
     "devDependencies": {
         "@types/react": "^18.2.15",
